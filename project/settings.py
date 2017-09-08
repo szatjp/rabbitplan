@@ -58,7 +58,7 @@ MIDDLEWARE_CLASSES = (
     'whitenoise.middleware.WhiteNoiseMiddleware',
 )
 
-ROOT_URLCONF = 'rabbitplan.urls'
+ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
     {
