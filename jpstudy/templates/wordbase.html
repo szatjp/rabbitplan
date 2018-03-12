@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{% block jqury %} {% endblock %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{% block title %} 天天进步 {% endblock %}</title>
+
+<style type="text/css">
+body {
+	background-position: center;
+	text-align: center
+}
+
+tr.caption{
+	cursor:default;   /*当为可点击标题行时显示箭头鼠标*/ 
+}
+
+#navul {list-style-type: none}
+
+#navul li {float:left;}   
+  
+#navul li a{   
+  color:#000000;            /*字体显示黑色*/   
+  text-decoration:none;  /*文字没有下划线*/   
+  padding-top:4px;       /*对象靠上的内边距为4px*/   
+  display:block;         /*块状显示*/   
+  width:97px;            /*块状对象的宽度为97px*/   
+  height:20px;           /*高度22px*/   
+  text-align:center;     /*文字居中显示*/   
+  background-color:#ececec; /*背景色*/   
+  margin-left:2px;          /*每个超链接对象左侧外边距2px*/   
+}   
+
+#navul li a:hover{   
+  background-color:#3399FF;  /*鼠标经过时背景色变为浅蓝色*/   
+  color:#ffffff;             /*字体颜色变为白色*/   
+}
+
+div.container {
+	width: 850px; /* 使用比最大宽度 (800px) 小 20px 的宽度可显示浏览器界面元素，并避免出现水平滚动条 */
+	background: #F5EEDB;
+	/* #FFFFFF; */
+	text-align: left; /* 这将覆盖 body 元素上的“text-align: center”。 */
+	margin: 0 auto; /* 自动边距（与宽度一起）会将页面居中 */	
+}
+
+div.top {
+	height: 100px;
+	background-color: #DDDDDD;
+	background-position: center;
+}
+
+div.nav {
+	background-position: center;
+	height: 24px;
+	background-color: #EBEBEB
+}
+
+div.main {
+	background-position: center;
+	height: 800px;
+/*	background-color: #F5EEDB; */
+	margin-top:20px;
+	margin-left:25px;
+	margin-right:125px;
+	/* margin: 0 auto; */ 	
+}
+
+div.bottom {
+	background-position: center;
+	height: 50px;
+	background-color: #DDDDDD;
+}
+
+em {
+	color: #008000
+}
+
+input.button {
+border:#999 1px solid;
+line-height:25px;
+height:25px;
+width:80px;
+font-size: 14px;
+}
+
+#corfini {color:green;}  /*完成字体颜色*/
+#corunfi {color:red;}  /*未完成字体颜色*/
+
+table {
+border-collapse:collapse; /* 关键属性：合并表格内外边框(其实表格边框有2px，外面1px，里面还有1px哦) */
+border:solid #999; /* 设置边框属性；样式(solid=实线)、颜色(#999=灰) */
+border-width:1px 1px 1px 1px; /* 设置边框状粗细：上 右 下 左 = 对应：1px 1px 1px 1px */
+}
+table caption {font-size:14px;font-weight:bolder;}
+table th {border:solid #999;border-width:1px 1px 1px 1px;padding:1px;text-align:center;}
+table td {border:solid #999;border-width:1px 1px 1px 1px;padding:1px;}
+tfoot td {text-align:center;}
+
+{% block css %}
+{% endblock %}
+
+</style>
+
+</head>
+
+<body>
+<div class="container">
+<div class="top">顶部</div>
+<div class="nav">
+    <ul id="navul">  
+            <li><a href="/plan/">计划设定</a></li>  
+            <li><a href="/wordadd/">单词维护</a></li>  
+            <li><a href="/fastview/go/">单词速览</a></li>  
+            <li><a href="/memword/">单词记忆</a></li>  
+            <li><a href="/senadd/">例句维护</a></li>  
+            <li><a href="/newword/go/">生词本</a></li>       
+    </ul> 
+</div>
+
+
+  <div class="main" style="margin-right:auto;margin-left:auto">
+    {% block content %}
+    <div class="box">一啊发<em>绿色</em>达的发放
+    </div>
+    {% endblock %}
+   <!-- end #main -->
+  </div>
+
+<div class="bottom" align="center">
+Power by Google Appengine
+<!-- end #footer --></div>
+<!-- end #container --></div>
+
+</body>
+</html>
+{% block script %}
+
+{% endblock %}

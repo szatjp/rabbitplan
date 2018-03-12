@@ -1,0 +1,49 @@
+{% extends 'wordbase.html' %}
+
+{% block title %}
+单词速览
+{% endblock %}
+
+{% block content %}
+<form action="/cursortest/?page={{ jword.number }}" method="post"> 
+<table border="1" width="80%">
+	<tr>
+		<th></th>
+		<th>单词</th>
+		<th>读音</th>
+		<th>释义</th>
+	</tr>
+{% for word in jword.object_list %}
+  {# Each "word" is a jword model object. #}
+  {{ word.full_name|upper }}
+	<tr>
+        <td><input type="radio" name="value" value="{{ word.key }}"></td>	
+		<td>{{word.fjword}}</td>
+		<td>{{word.fpronunciation}}</td>
+		<td>{{word.fcword}}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+<div class="pagination">
+<span class="step-links">
+ {% if jword.has_previous %}
+  <a href="?page={{ jword.previous_page_number }}">上一页</a>
+ {% else %}
+   <a>上一页</a>
+ {% endif %}
+
+<span class="current">
+ 页 {{ jword.number }} 共 {{jword.paginator.num_pages }}.
+</span>
+{% if jword.has_next %}
+<a href="?page={{ jword.next_page_number }}">下一页</a>
+{% else %}
+<a>下一页</a>
+{% endif %}
+</span>
+<input type="text" name="pageno"/><input type="submit" value="go"/>
+</form>
+</div>
+
+{% endblock %}

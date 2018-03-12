@@ -1,0 +1,14 @@
+{% extends 'user/userbase.html' %}
+
+{% block title %}
+例句添加
+{% endblock %}
+
+{% block contents %}
+<form action="" method="post">
+<table>
+{{ sentence.as_table }}
+</table>
+<input type="submit" value="提交">
+</form>
+{% endblock %}

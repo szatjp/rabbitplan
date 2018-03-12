@@ -1,0 +1,51 @@
+{% extends 'wordbase.html' %}
+
+{% block title %}
+生词本
+{% endblock %}
+
+{% block content %}
+<form action="/testword/" method="post" name="testtb">
+<table id="tblnword">
+<tr>
+ <th>&nbsp</th>
+ <th>释义</th> 
+ <th>用户单词</th>
+ <th>单词</th>
+ <th>陌生度</th>
+</tr>   
+{% for nword in newword.object_list %}
+  {# Each "nword" is a newword model object. #}
+  {{ nword.full_name|upper }}
+
+<tr>
+ <td><input type="checkbox" name="pitem" value="{{nword.key}}"/></td>
+ <td>{{nword.fjword.fcword}}</td>
+ <td><input type="text" name="{{nword.key}}"/></td>
+ <td>{{nword.fjword.fjword}}</td>
+ <td>{{nword.flevnum}}</td>
+</tr> 
+{% endfor %}
+</table>
+<div class="pagination">
+<span class="step-links">
+ {% if newword.has_previous %}
+  <a href="?page={{ newword.previous_page_number }}">上一页</a>
+ {% else %}
+   <a>上一页</a>
+ {% endif %}
+
+<span class="current">
+ 页 {{ newword.number }} 共 {{newword.paginator.num_pages }}.
+</span>
+{% if newword.has_next %}
+<a href="?page={{ newword.next_page_number }}">下一页</a>
+{% else %}
+<a>下一页</a>
+{% endif %}
+</span>
+</div>
+<p><input type="submit" name="bubsat" value="提交"/></p>
+</form>
+单词测验
+{% endblock %}

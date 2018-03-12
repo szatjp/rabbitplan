@@ -1,0 +1,27 @@
+{% extends 'html5base.html' %}
+{% load i18n %}
+
+{% block title %}
+用户注册
+{% endblock %}
+
+{% block contents %}
+<div class="row">&nbsp</div>
+<div class="row">&nbsp</div>
+<div class="container">
+	<div class="span4"></div>
+	<div class="span5">
+		<form action="" method="post">
+		{% csrf_token %}
+			<table class="table table-bordered" width="650" border="0">{{regform.as_table}}
+			</table>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary" value="提交">提交更改</button>
+				<button class="btn">取消</button>
+			</div>
+		</form>
+	</div>
+	<div class="span3"></div>
+</div>
+
+{% endblock %}

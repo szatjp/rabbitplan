@@ -1,0 +1,17 @@
+{% extends 'html5base.html' %}
+{% load i18n %}
+
+{% block title %}
+add
+{% endblock %}
+
+{% block contents %}
+    <h1>Contact us</h1>
+    {{ objkey }} 
+    <form action="" method="post">{% csrf_token %}
+      {{ proform.as_p }}
+      <input type="hidden" name="sendkey" value={{ objkey }} />            
+      <input type="submit" name="save" value="提交"/>
+    </form>
+
+{% endblock %}

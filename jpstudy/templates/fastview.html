@@ -1,0 +1,53 @@
+{% extends 'wordbase.html' %}
+
+{% block title %}
+单词速览
+{% endblock %}
+
+{% block content %}
+{{ page }}
+{{ sessioncon }}
+<p>
+前cursor：{{ previousurl }}<br>
+后cursor：{{ nexturl }}
+</p>
+{{ jword }}
+<form action="/fastview/?page={{ jword.number }}" method="post"> 
+<table border="1" width="80%">
+	<tr>
+		<th></th>
+		<th>单词</th>
+		<th>读音</th>
+		<th>释义</th>
+	</tr>
+{% for word in jword %}
+  {# Each "word" is a jword model object. #}
+  {{ word.full_name|upper }}
+	<tr>
+        <td><input type="radio" name="value" value="{{ word.key.urlsafe }}"></td>	
+		<td>{{word.fjword}}</td>
+		<td>{{word.fpronunciation}}</td>
+		<td>{{word.fcword}}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+<div class="pagination">
+{% if mayto %}
+ <a href="/fastview/to/?cur={{ previousurl }}">上一页</a>
+{% else %}
+<a>上一页</a>
+{% endif %}
+
+ {% if mayfrom %}
+ <a href="/fastview/from/?cur={{ nexturl }}">下一页</a>
+  {% else %}
+   <a>下一页</a>
+ {% endif %}
+</form>
+</div>
+<p>
+
+
+
+{% endblock %}

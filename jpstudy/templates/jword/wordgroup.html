@@ -1,0 +1,37 @@
+{% extends 'user/adminbase.html' %}
+
+{% block title %}
+单词类别标签
+{% endblock %}
+
+{% block contents %}
+<div>
+st: {{ st }}
+<form action="/wordgroupedit/" method="post">
+<table border="1" width="500">
+  <tr>
+   <th>&nbsp</th>
+   <th>大类</th>
+   <th>小类</th>
+  </tr>
+  {% for group in jwordgroup %}
+  <tr>
+    <td><input type="radio" name="groupkey" value="{{ group.key }}"></td>
+    <td>{{group.ftopclass}}</td>
+    <td>{{group.fminclass}}</td>
+  </tr>
+  {% endfor %}
+</table> 
+<input type="submit" value="编辑"></input>
+</form>
+</div>
+
+<div>
+<form action="/wordgroup/" method="post">
+<input type="hidden" name="groupkey" value="{{groupkey}}"/>
+{{ wordgroup.as_table }}
+<input type="submit" value="保存"/>
+</form>
+</div>
+
+{% endblock %}

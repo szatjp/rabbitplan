@@ -1,0 +1,42 @@
+{% extends 'wordbase.html' %}
+
+{% block title %}
+单词速览
+{% endblock %}
+
+{% block content %}
+{{ page }}
+{{ sessioncon }}
+<form action="/fastview/?page={{ jword.number }}" method="post"> 
+<table border="1" width="80%">
+	<tr>
+		<th></th>
+		<th>单词</th>
+		<th>读音</th>
+		<th>释义</th>
+	</tr>
+{% for word in jword %}
+  {# Each "word" is a jword model object. #}
+  {{ word.full_name|upper }}
+	<tr>
+        <td><input type="radio" name="value" value="{{ word.key }}"></td>	
+		<td>{{word.fjword}}</td>
+		<td>{{word.fpronunciation}}</td>
+		<td>{{word.fcword}}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+<div class="pagination">
+ <a href="/fastview/to/?cur={{ previousurl }}">上一页</a>
+ <a href="/fastview/from/?cur={{ nexturl }}">下一页</a>
+ <a href="/addmark/fastview/?cur={{ nexturl }}">标记书签</a>
+ <a href="/loadmark/fastview/">装入书签</a>
+</form>
+</div>
+<p>
+<a href="/wordglist">分类浏览</a>
+
+
+
+{% endblock %}

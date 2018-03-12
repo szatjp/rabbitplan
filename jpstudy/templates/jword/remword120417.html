@@ -1,0 +1,85 @@
+{% extends 'wordbase.html' %}
+
+{% block jqury %}
+<script type="text/javascript" src="/site_media/js/jquery.js"></script>
+{% endblock %}
+
+{% block css %}
+.colhide
+{
+color:#F5EEDB;
+}
+.check{width:5}
+.word{width:20%}
+.pron{width:25%}
+.mean{width:25%}
+.lev{width:10%}
+.date{width:15%}
+{% endblock %}
+
+{% block content %}
+<form action="/remword/?page={{ jword.number }}" method="post">
+<table id="tblnword" border="1" width="80%">
+	<tr>
+		<th width="6%"></th>
+		<th width="22%">释义</th>
+		<th width="22%">单词</th>
+		<th width="40%">读音</th>
+	</tr>
+{% for word in jword.object_list %}
+  {# Each "word" is a jword model object. #}
+  {{ word.full_name|upper }}
+	<tr>
+        <td><input type="checkbox" name="pitem" value="{{ word.key }}"></td>	
+		<td>{{word.fcword}}</td>
+		<td>{{word.fjword}}</td>
+		<td>{{word.fpronunciation}}</td>
+	</tr>
+{% endfor %}
+</table>
+
+<div class="pagination">
+<span class="step-links">
+ {% if jword.has_previous %}
+  <a href="?page={{ jword.previous_page_number }}">上一页</a>
+ {% else %}
+   <a>上一页</a>
+ {% endif %}
+
+<span class="current">
+ 页{{ jword.number }} 共 {{jword.paginator.num_pages }}.
+</span>
+{% if jword.has_next %}
+<a href="?page={{ jword.next_page_number }}">下一页</a>
+{% else %}
+<a>下一页</a>
+{% endif %}
+</span>
+<input type="text" name="pageno" value=""/><input name="subsat" type="submit" value="go"/>
+</div>
+<input type="submit" name="subsat" value="加入生词本" class="button"></input>
+书签
+</form>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+//	$('#tblnword').css("color","red");
+	function one(){
+		alert("one")
+	}
+    $("th").click(function(){
+		var colnum = $("th").index(this)+1;
+		//nth-child 选取td元素下索引值为  colnum的元素，给其添加CSS元素   
+        $("#tblnword tr td:nth-child("+colnum.toString()+")").toggleClass("colhide");
+    });
+    $(function(){
+            $("#tb tr:gt(0)").each(function(){
+                var val = $(this).find("td").eq(1).html();
+                $(this).attr("title", val);
+                if(val.length > 45)
+                    $(this).find("td").eq(1).html(val.substring(0, 45) + "...")
+            });
+    });
+</script>
+{% endblock %}

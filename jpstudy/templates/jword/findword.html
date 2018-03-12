@@ -1,0 +1,53 @@
+{% extends 'html5base.html' %}
+{% load i18n %}
+
+{% block title %}
+兔子学
+{% endblock %}
+
+{% block addcss %}
+<style type="text/css">
+ p.sen {color:blue}
+</style>
+{% endblock %}
+
+{% block contents %}
+<div class="clearfix">&nbsp</div>
+<p>&nbsp</p>
+<p>&nbsp</p>
+<div class="container">
+	<div class="row" class="text-center">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row">
+		        <div class="col-md-12">
+		            <div class="row">
+						<form class="form-inline" role="form" action="/jpstudy/findword/" method="post">
+							{% csrf_token %}
+							<div class="form-group col-md-10">
+								<div class="input-group">
+									<div class="input-group-addon">单词</div>
+								       <input type="text" class="form-control" name="word"
+										id="inputword" value="{{sword}}"/>
+									</div>
+							</div>
+							<div class="col-md-2">
+							    <button type="submit" class="btn btn-default">查找</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		    <div class="row">
+		        <p/>
+		        <div class="col-md-12">            
+				{% for word in jword %}
+                <p>{{word.fword}} 【{{word.fpronunciation}}】&nbsp&nbsp&nbsp
+                {% if user.is_authenticated %}<a href="/jpstudy/addnew/{{word.pk}}/">添加到生词本</a>{% endif %}<br>
+                {{word.fcword}} <br>
+                <p class="sen"> 例：</p1>{{word.fsentence.fsentence}}
+                {% endfor %}
+                </div>
+             </div>
+</div>
+{% endblock %}

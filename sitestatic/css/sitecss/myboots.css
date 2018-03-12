@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+// 作为classe使用
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// 作为mixin使用
+.element {
+  .center-block();
+}

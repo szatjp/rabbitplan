@@ -1,0 +1,49 @@
+{% extends 'user/userbase.html' %}
+ {% block titile %} 汉语单词录入 {% endblock %}
+ 
+{% block contents %}
+<form action="/findedit/" method="post">
+搜索单词<input type="text" name="word"></input><input type="submit" value="查询"></input>
+</form>
+
+<form action="/wordedit/" method="post">
+<table border="1" width="500">
+	<tr>
+		<th align="center" style="width:20px">&nbsp</th>
+		<th align="center" style="width:120px">单词</th>
+		<th align="center" style="width:140px">读音</th>
+		<th align="center" style="width:220px">释义</th>
+	</tr>
+{% for word in cword %}
+	<tr>
+        <td><input type="radio" name="wordkey" value="{{ word.key }}"></td>	
+		<td>{{word.fword}}</td>
+		<td>{{word.fpronunciation}}</td>
+		<td>{{word.ftword}}</td>
+	</tr>
+{% endfor %}
+{% for word in pword %}
+	<tr>
+        <td><input type="radio" name="wordkey" value="{{ word.key }}"></td>	
+		<td>{{word.fword}}</td>
+		<td>{{word.fpronunciation}}</td>
+		<td>{{word.ftword}}</td>
+	</tr>
+{% endfor %}
+</table>
+<input type="submit" value="编辑"></input>
+</form>
+
+{% if jwordform.errors %}
+<p style="color: red;">Please correct the error{{
+jwordform.errors|pluralize }} below.</p>
+{% endif %}
+
+<form action="/wordadd/" method="post">
+<input type="hidden" name="wordkey" value="{{wordkey}}"/>
+<table>
+	{{ jwordform.as_table }}
+</table>
+<input type="submit" value="提交"></form>
+
+{% endblock %}

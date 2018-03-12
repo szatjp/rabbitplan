@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+临时单词
+{% endblock %}
+
+{% block contents %}
+    单词录入
+    <form name='tempword' action="/tempwordli/" method="post">
+      {{ wform.as_table }}
+      <input type="submit" value="提交">
+    </form>
+    
+    {% for word in tempwlist %}
+      <p>{{word.fdanci}} [{{word.fduyin}}]<br>
+      {{word.fcixing}} <br>
+      {{word.fciyi}}<br>
+    {% endfor %}
+    
+
+{% endblock %}

@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+    <!--<script type="text/javascript" src="coreChart.js"></script> -->
+   <script type="text/javascript" src="jsapi.js"></script> 
+   <script src="js/corechart.js" type="text/javascript"></script>
+   <link href="js/ui+zh_CN.css" type="text/css" rel="stylesheet">
+   <script src="js/format+zh_CN,default+zh_CN,ui+zh_CN,corechart+zh_CN.I.js" type="text/javascript"></script>
+  <link href="js/tooltip.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+		
+        data.addColumn('string', 'Task');
+        data.addColumn('number', 'Hours per Day');
+        data.addRows([
+          ['Work',    6],
+          ['Eat',      2],
+          ['Commute',  3],
+          ['Watch TV', 4],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          width: 450, height: 300,
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+  aabbccdd
+    <div id="chart_div"></div>
+  </body>
+</html>
