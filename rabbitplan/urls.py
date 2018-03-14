@@ -31,9 +31,10 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', index),
+    url(r'^', include(router.urls)),
     url(r'^health$', health),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^dict/', include('dictdata.urls')),   # ×ÖµäÄ£¿é
+    url(r'^dict/', include('dictdata.urls')),   # ï¿½Öµï¿½Ä£ï¿½ï¿½
 ]
 
 urlpatterns += [
