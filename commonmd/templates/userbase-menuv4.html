@@ -1,0 +1,288 @@
+{% extends 'bsbasev4.html' %} 
+{% load i18n %}
+ 
+{% block title %}SMC 智立方{%endblock %}
+
+{% block navbrand %}
+      <a class="navbar-brand" href="/user/myhome/">首页</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+{% endblock %}
+
+{% block menu %}
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">产品预约</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+			{% if perms.produce.change_proreserve %}
+			<a class="dropdown-item" href="/produ/reserve/">产品预约</a>
+			<a class="dropdown-item" href="/produ/resfind/">预约查询</a>
+			<a class="dropdown-item" href="/produ/resadv/">高级查询</a>
+			{% endif %}	
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">物品信息维护</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown02">
+		    {% if perms.produce.add_proinfo %}
+			<a class="dropdown-item" href="/produ/bigclass/">物品总分类</a>
+			<a class="dropdown-item" href="/produ/midclass/">物品大类</a>
+			<a class="dropdown-item" href="/produ/smallclass/">物品中类</a>
+			<a class="dropdown-item" href="/produ/detclass/">物品小类</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/codelist/">物品细分</a>
+			{% endif %} 
+			{% if perms.produce.change_proinfotemp %}
+			<a class="dropdown-item" href="/produ/codetreepg/">物品主文件</a>
+			{% endif %} 
+			<div class="dropdown-divider"></div>
+			{% if perms.produce.add_proinfo %}
+			<a class="dropdown-item" href="/produ/prodconf/">产品配置</a>
+			{% endif %}
+			{% if perms.produce.change_purbom %}
+			<a class="dropdown-item" href="/produ/pbom/">PBOM维护</a>
+			{% endif %}
+			{% if perms.produce.add_proinfo %}
+			<a class="dropdown-item" href="/produ/metunit/">计量单位设置</a>
+			{% endif %}	
+            </div>
+          </li> 
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">采购管理</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown03">
+			{% if perms.produce.change_inbill %}
+			<a class="dropdown-item" href="/produ/insidebill/">内制依赖书</a>
+			{% endif %}
+			{% if perms.produce.change_purbill %}
+			<a class="dropdown-item" href="/produ/posearch/">采购订单</a>
+			{% endif %}			
+			{% if perms.produce.change_twopurbill %}
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/twopur/">二次加工单</a>
+			{% endif %}					
+			{% if perms.produce.add_supplier %}
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/supplier/">供应商信息</a>
+			{% endif %}
+            </div>
+          </li> 
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">库存管理</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown04">
+		    {% if perms.produce.change_storein %}
+			<a class="dropdown-item" href="/produ/stoinlist/">入库单</a>
+			{% endif %}
+		    {% if perms.produce.change_getbill %}
+			<a class="dropdown-item" href="/produ/outbill/">领料单</a>
+			<a class="dropdown-item" href="/produ/retbill/">退库单</a>
+			{% endif %}
+		    {% if perms.produce.change_warehouse %}
+		    <div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/store/">库存表</a>
+			<a class="dropdown-item" href="/produ/consumsto/">现场消耗品</a>
+			<!-- <a class="dropdown-item" href="/produ/stmonend/">仓库月结</a>  -->
+			<!-- <a class="dropdown-item" href="/produ/scrapbill/">报废单</a>  -->			
+			{% endif %}									
+		    {% if perms.produce.add_store %}
+		    <div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/position/">库位维护</a>
+			{% endif %}
+			{% if perms.produce.change_storein %} 
+			<a class="dropdown-item" href="/produ/labprn/">仓储管理</a>
+			{% endif %}
+			{% if perms.produce.add_monability %}
+			<a class="dropdown-item" href="/produ/metclapg/">库存物品类别信息</a>
+			<a class="dropdown-item" href="/produ/stostaamount/">库存标准金额设置</a>
+			{% endif %}				
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">订单管理</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown05">
+			{% if perms.produce.change_procomm %}
+			<a class="dropdown-item" href="/produ/pofileup/">PO导入</a>
+			<a class="dropdown-item" href="/produ/ylsli/">依赖书管理</a>
+			<!-- <a class="dropdown-item" href="/produ/invoice/">发票管理</a>   -->
+			{% endif %}
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/procommli/">QDC指令书制作</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/performance/">SPM实绩表</a>
+			<a class="dropdown-item" href="/produ/gatclient/">应收款查询</a>
+			<a class="dropdown-item" href="/produ/saleplan/">年度计划维护</a>
+            </div>
+          </li>                                                  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown06" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">生产管理</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown06">
+		    {% if perms.produce.change_confirmcomm %}
+			<a class="dropdown-item" href="/produ/cfmcomm/">指令书确认</a>
+			{% endif %}
+			{% if perms.produce.change_protask %}
+			<a class="dropdown-item" href="/produ/proplan/">生产管理表</a>
+			{% endif %}
+			{% if perms.produce.add_monability %}
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/monabiset/">生产能力设定</a>
+			{% endif %}
+			{% if perms.produce.change_protask %}
+			<a class="dropdown-item" href="/produ/planview/">生产任务查询</a>	
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/produ/commfinrate/">指令书纳期遵守率</a>
+			<a class="dropdown-item" href="/produ/repocenter/">报告中心</a>
+			{% endif %}		
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MES设置</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown07">
+			<a class="dropdown-item" href="/mes/">在线产品</a>		
+			{% if perms.produce.change_confirmcomm %}
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/mes/produceli/">生产线设置</a>
+			<a class="dropdown-item" href="/mes/worksec/">工段定义</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/mes/prodwork/">产品工序设定</a>	
+			{% endif %}	
+            </div>
+          </li>
+          {% if perms.oahome %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">OA管理</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown07">
+			<a class="dropdown-item" href="/oa/devlist/">OA设备</a>	
+			<a class="dropdown-item" href="/devanaly/">设备统计</a>
+			<a class="dropdown-item" href="/licmanage/">License管理</a>
+			<a class="dropdown-item" href="/oa/email/">Email地址管理</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/oa/mangroup/">人员组</a>
+			<a class="dropdown-item" href="/oa/ecodediff/">工号对照表</a>
+			<a class="dropdown-item" href="/oa/managepara/">系统参数管理</a>	
+            </div>
+          </li>
+          {% endif %}
+          {% if perms.produce %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown11" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">帮助</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown11">
+			<a class="dropdown-item" href="/produ/coderole/">系统单据编号说明</a>	
+            </div>
+          </li>
+          {% endif %}                                                    
+        </ul>
+        
+        {% if user.is_authenticated %}
+		    <a class="navbar-brand navbar-right" href="">
+			{%trans '用户' %}：{{user.first_name}}</a> &nbsp&nbsp
+		    <a class="btn btn-outline-warning my-2 my-sm-0 btn-sm" href="/accounts/logout/" role="button">
+			{%trans	'注销' %}</a>			       
+        {% else %}
+            <form class="form-inline my-2 my-lg-0">
+			{% csrf_token %}	          
+                <input class="form-control mr-sm-1" type="text" name="username" placeholder="{%trans '用户' %}" aria-label="用户">
+                <input class="form-control mr-sm-1" type="password" name="password" placeholder="{%trans '密码' %}" aria-label="密码">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{%trans '登录' %}</button>
+                <input type="hidden" name="next" value="/user/userhome/" />  
+            </form>
+        {% endif %}
+
+      </div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+	<div class="container">
+		<p>&nbsp</p>
+		<h1>SMC上海松井</h1>
+		<p>&nbsp</p>
+		<p>
+			{% if perms.produce %} <a class="btn btn-primary btn-lg"
+				role="button" href="/produ/coderole/">使用帮助 &raquo;</a> {% endif %}
+		</p>
+	</div>
+</div>
+
+<div class="container">
+	<!-- Example row of columns -->
+    {% if perms.management %}
+	<div class="row">
+		<div class="col-md-4">
+			<h3>考勤管理</h3>
+			<p>
+				<a href="/hr/cksum/">考勤数据汇集</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="/hr/ckemplli/">每日考勤确认</a>
+			</p>
+			<a href="/hr/ckmonsum/">考勤月统计</a>&nbsp&nbsp&nbsp&nbsp <a
+				href="/hr/monck/">月度考勤确认</a>&nbsp&nbsp&nbsp&nbsp <a
+				href="/hr/holiday/">休假信息</a>
+			</p>
+		</div>
+		<div class="col-md-4">
+			<h3>人员及部门</h3>
+			<p>
+				<a href="/hr/empllist/">职员信息</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="/hr/emplana/">人员统计</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="/hr/dplist/">部门信息</a>
+			</p>
+			<p>
+				<a href="/hr/assetlist/">职位信息</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="/hr/ckruleass/">考勤规则分配</a>
+			</p>
+			</p>
+		</div>
+		<div class="col-md-4">
+			<h3>考勤参数设置</h3>
+			<p>
+				<a href="/hr/datetype/">公司日历</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="/hr/ckrule/">考勤规则</a>
+			</p>
+			<p>
+				<a href="/hr/paralist/">考勤参数</a>
+			</p>
+		</div>
+	</div>
+	<hr>
+	{% endif %} {% if perms.erpextend %}
+	<div class="row">
+		<div class="col-md-4">
+			<h3>工时管理</h3>
+			<p>
+				<a href="/erpex/persontime/">依赖书工时统计</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="/erpex/personalltime/">全部工时统计</a>
+			</p>
+			<p>
+				<a href="/erpex/ylslist/">工程管理票</a>&nbsp&nbsp&nbsp&nbsp <a
+					href="/erpex/missprj/">依赖书工程统计</a>
+			</p>
+			<p>
+				<a href="/erpex/ylstime/">工时分析</a>
+			</p>
+		</div>
+		<div class="col-md-4">
+			<h3>依赖书相关</h3>
+			<p>
+				<a href="/erpex/ylsamount/">依赖书金额</a>
+			</p>
+			<p>
+				<a href="/erpex/finalnyls/">完工依赖书</a>
+			</p>
+		</div>
+		<div class="col-md-4">
+			<h3>系统设置</h3>
+
+			<p>生产能力</p>
+			<p></p>
+		</div>
+	</div>
+	<hr>
+	{% endif %}
+
+</div>
+<!-- /container -->
+
+{% endblock %}
