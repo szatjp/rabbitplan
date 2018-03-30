@@ -15,7 +15,10 @@ def config():
     if service_name:
         engine = engines.get(os.getenv('DATABASE_ENGINE'), engines['sqlite'])
     else:
-        #engine = engines['sqlite']
+        engine = engines['sqlite']
+    name = os.getenv('DATABASE_NAME')
+    if not name and engine == engines['sqlite']:
+        #name = os.path.join(settings.BASE_DIR, 'db.sqlite3')
         return {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
             'NAME': 'rabbitdb',
@@ -23,10 +26,7 @@ def config():
             'PASSWORD': '123321',                  # Not used with sqlite3.
             'HOST': 'localhost',
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        }
-    name = os.getenv('DATABASE_NAME')
-    if not name and engine == engines['sqlite']:
-        name = os.path.join(settings.BASE_DIR, 'db.sqlite3')
+        }        
     return {
         'ENGINE': engine,
         'NAME': name,
