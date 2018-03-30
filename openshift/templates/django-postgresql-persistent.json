@@ -400,14 +400,14 @@
                   "timeoutSeconds": 1,
                   "initialDelaySeconds": 5,
                   "exec": {
-                    "command": [ "/bin/sh", "-i", "-c", "psql -h 127.0.0.1 -U ${POSTGRESQL_USER} -q -d ${POSTGRESQL_DATABASE} -c 'SELECT 1'"]
+                    "command": [ "/usr/libexec/check-container" ]
                   }
                 },
                 "livenessProbe": {
-                  "timeoutSeconds": 1,
-                  "initialDelaySeconds": 30,
-                  "tcpSocket": {
-                    "port": 5432
+                  "timeoutSeconds": 10,
+                  "initialDelaySeconds": 120,
+                  "exec": {
+                    "command": [ "/usr/libexec/check-container", "--live" ]
                   }
                 },
                 "resources": {
@@ -442,20 +442,20 @@
       "displayName": "Memory Limit",
       "required": true,
       "description": "Maximum amount of memory the Django container can use.",
-      "value": "500Mi"
+      "value": "512Mi"
     },
     {
       "name": "MEMORY_POSTGRESQL_LIMIT",
       "displayName": "Memory Limit (PostgreSQL)",
       "required": true,
       "description": "Maximum amount of memory the PostgreSQL container can use.",
-      "value": "500Mi"
+      "value": "512Mi"
     },
     {
       "name": "VOLUME_CAPACITY",
       "displayName": "Volume Capacity",
       "description": "Volume space available for data, e.g. 512Mi, 2Gi",
-      "value": "900Mi",
+      "value": "1Gi",
       "required": true
     },
     {
@@ -463,7 +463,7 @@
       "displayName": "Git Repository URL",
       "required": true,
       "description": "The URL of the repository with your application source code.",
-      "value": "https://github.com/szatjp/django-ex.git"
+      "value": "https://github.com/openshift/django-ex.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
