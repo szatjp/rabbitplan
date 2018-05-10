@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+from socket import gethostname
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,7 +33,15 @@ SECRET_KEY = os.getenv(
 #DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+hostname = gethostname()
+
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = [gethostname(), # For internal OpenShift load balancer security purposes.
+                     os.environ.get('OPENSHIFT_APP_DNS') # Dynamically map to the OpenShift gear name.
+    ]
+    
 
 
 # Application definition
@@ -85,11 +95,46 @@ WSGI_APPLICATION = 'wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-from . import database
 
+
+'''
 DATABASES = {
-    'default': database.config()
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'rabbitdb',
+            'USER' : 'postgres',
+            'PASSWORD' : '123321',
+            'HOST' : 'localhost',
+            'PORT' : '',
+        }     
 }
+'''
+
+
+from . import database
+'''
+DATABASES = {
+        'default': database.config()
+}
+''' 
+
+
+if hostname in ['tjp-pc']:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'rabbitdb',
+            'USER' : 'postgres',
+            'PASSWORD' : '123321',
+            'HOST' : 'localhost',
+            'PORT' : '',
+        }     
+    }    
+else:
+    DATABASES = {
+        'default': database.config()
+    }
+
 
 
 # Password validation
@@ -134,3 +179,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 INTERNAL_IPS = ['127.0.0.1']
+
+# sunny_tong abcba123
