@@ -19,8 +19,7 @@ class JaWord(models.Model):
     fpronunciation = models.CharField(null=True, max_length=30, blank=True)
     fwordclass = models.CharField(null=True, max_length=12, blank=True)
     frelaword = models.CharField(null=True, max_length=200, blank=True) 
-    fuser = models.CharField(null=True, max_length=30, blank=True)
-    fcreater = models.ForeignKey('auth.user', related_name='jaword', on_delete=models.CASCADE) 
+    fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
     favail = models.CharField(max_length=1,default='1')
     class Meta:
