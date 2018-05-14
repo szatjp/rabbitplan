@@ -34,7 +34,8 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^health$', health),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^dict/', include('dictdata.urls')),   # �ֵ�ģ��
+    url(r'^dict/', include('dictdata.urls')),   # 字典应用
+    url(r'^functest/', include('functest.urls')),   # 功能测试
 ]
 
 urlpatterns += [
