@@ -18,6 +18,7 @@ from dictdata.dictedit.dataserialize import JawordSeria, CnwordSeria, EnwordSeri
 class JpList(generics.ListCreateAPIView):
     queryset = JaWord.objects.all()
     serializer_class = JawordSeria
+    filter_fields = ('fwordno','fword','fpronunciation','fdate')
     def perform_create(self, serializer):
         prestr = 'ja'
         lastno = JaWord.objects.filter().aggregate(Max('fwordno'))
@@ -25,7 +26,7 @@ class JpList(generics.ListCreateAPIView):
             maxno = prestr+'000000'
         else:
             maxno = lastno['fwordno__max']        
-        serializer.save(fwordno=makecode(maxno,prestr,8),fuser='sunny_tong')
+        serializer.save(fwordno=makecode(maxno,prestr,8),fuser=self.request.user.first_name)
 
 
 class JpDetail(generics.RetrieveUpdateDestroyAPIView):
