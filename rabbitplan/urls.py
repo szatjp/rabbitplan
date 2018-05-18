@@ -36,6 +36,11 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^dict/', include('dictdata.urls')),   # 字典应用
     url(r'^functest/', include('functest.urls')),   # 功能测试
+    url(r'^jp/', include('jpstudy.urls')),   # 功能测试
+]
+
+urlpatterns += [
+     url(r'^login$', login, name='login'),
 ]
 
 urlpatterns += [

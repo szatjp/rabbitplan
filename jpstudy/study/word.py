@@ -7,7 +7,7 @@ Created on 2014-4-9
 '''
 
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,render
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.db.models import Q
@@ -130,13 +130,13 @@ def findword(request):
         #如果没有查到单词
         if qrydict == None:
             noword='y'
-            return render_to_response('person/myfind.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
+            return render(request,'person/myfind.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
         else:
             qrydict["sword"]=fword
             qrydict["noword"]='n'              
-            return render_to_response('person/myfind.html',qrydict,context_instance=RequestContext(request))
+            return render(request,'person/myfind.html',qrydict)
     else:
-        return render_to_response('person/myfind.html',context_instance=RequestContext(request))
+        return render(request,'person/myfind.html')
     
 
 # 将查询的单词添加到生词表
