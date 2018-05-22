@@ -8,7 +8,7 @@ from django.db import models
 
 # 记忆曲线进度代码表
 class ProCode(models.Model):
-    fstateid = models.IntegerField(primary_key=True)
+    fstateid = models.CharField(primary_key=True,max_length=3)
     fstatename =  models.CharField(max_length=30)
     fnexttime = models.IntegerField()
     
