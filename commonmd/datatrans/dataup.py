@@ -12,18 +12,18 @@ import json
 
 from django.http import HttpResponse
 
-from commonmd.models import FreshTime
+from commonmd.models import ProCode
 
 
-def downdict(request):
+def upprocode(request):
     url = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/jpwords/'
     #url = 'http://127.0.0.1:8000/dict/jpwords/'
 
     #postData = urllib.parse.urlencode(data).encode('utf-8')
     #restreq = urllib.request.Request(url,postData,{'Content-Type': 'application/json'})
     
-    if FreshTime.objects.filter().exists():
-        freshdate = FreshTime.objects.get().date()
+    if ProCode.objects.filter().exists():
+        freshdate = ProCode.objects.filter()
     else:
         freshdate = '2018-05-15 00:00:00'
     
