@@ -36,7 +36,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^dict/', include('dictdata.urls')),   # 字典应用
     url(r'^functest/', include('functest.urls')),   # 功能测试
-    url(r'^jp/', include('jpstudy.urls')),   # 功能测试
+    url(r'^jp/', include('jpstudy.urls')),   # 日语学习
+    url(r'^common/', include('commonmd.urls')),   # 共通模块
 ]
 
 urlpatterns += [

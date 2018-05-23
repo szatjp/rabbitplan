@@ -12,7 +12,7 @@ class ProCode(models.Model):
     fstatename =  models.CharField(max_length=30)
     fnexttime = models.IntegerField()
     
-# 记忆曲线进度代码表
+# 词库更新时间表
 class FreshTime(models.Model):
     fid =  models.AutoField(primary_key=True)   
     ffreshtime = models.DateTimeField()

@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from commonmd.models import ProCode
 
 # Register your models here.

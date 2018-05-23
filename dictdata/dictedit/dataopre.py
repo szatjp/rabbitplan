@@ -9,16 +9,24 @@ Created on 2016-1-18
 from django.db.models import Max
 
 from rest_framework import generics
+from django_filters import rest_framework as filters
 
 from commonfunc.commfunc import makecode
 from dictdata.models import JaWord, CnWord, EnWord
 from dictdata.dictedit.dataserialize import JawordSeria, CnwordSeria, EnwordSeria
 
 
+class JpFilter(filters.FilterSet):
+    freshdate = filters.IsoDateTimeFilter(name="fdate", lookup_expr='gte')
+    class Meta:
+        model = JaWord
+        fields = ['fwordno','fword','fpronunciation','freshdate']
+        
+        
 class JpList(generics.ListCreateAPIView):
     queryset = JaWord.objects.all()
     serializer_class = JawordSeria
-    filter_fields = ('fwordno','fword','fpronunciation','fdate')
+    filter_class = JpFilter
     def perform_create(self, serializer):
         prestr = 'ja'
         lastno = JaWord.objects.filter().aggregate(Max('fwordno'))
