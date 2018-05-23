@@ -1,0 +1,74 @@
+[
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P01",
+    "fields": {
+      "fstatename": "未开始记忆",
+      "fnexttime": 0
+    }
+  },
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P02",
+    "fields": {
+      "fstatename": "首次记忆完成",
+      "fnexttime": 1
+    }
+  },
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P03",
+    "fields": {
+      "fstatename": "1小时记忆完成",
+      "fnexttime": 12
+    }
+  },
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P04",
+    "fields": {
+      "fstatename": "12小时记忆完成",
+      "fnexttime": 12
+    }
+  },  
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P05",
+    "fields": {
+      "fstatename": "第2天记忆完成",
+      "fnexttime": 24
+    }
+  },
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P06",
+    "fields": {
+      "fstatename": "第3天记忆完成",
+      "fnexttime": 72
+    }
+  },
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P07",
+    "fields": {
+      "fstatename": "第6天记忆完成",
+      "fnexttime": 96
+    }
+  },
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P08",
+    "fields": {
+      "fstatename": "第10天记忆完成",
+      "fnexttime": 120
+    }
+  },
+  {
+    "model": "commonmd.ProCode",
+    "pk": "P09",
+    "fields": {
+      "fstatename": "第15天记忆完成",
+      "fnexttime": 0
+    }
+  }
+]
