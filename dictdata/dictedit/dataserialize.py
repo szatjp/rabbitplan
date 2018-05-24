@@ -29,7 +29,7 @@ class JawordSeria(serializers.ModelSerializer):
     class Meta:
         model = JaWord
         fields = ('fwordno', 'fword', 'fpronunciation',
-                  'fwordclass', 'fuser', 'fdate')
+                  'fwordclass', 'frelaword', 'fuser', 'fdate')
         read_only_fields = ('fwordno','fuser')
         
 class CnwordSeria(serializers.HyperlinkedModelSerializer):
