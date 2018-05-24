@@ -25,7 +25,7 @@ def downdict(request):
     if FreshTime.objects.filter().exists():
         freshdate = FreshTime.objects.get().date()
     else:
-        freshdate = '2018-05-15 00:00:00'
+        freshdate = '2018-01-01 00:00:00'
     
     values = {'freshdate' : freshdate}
     
