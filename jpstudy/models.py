@@ -12,7 +12,7 @@ from commonmd.models import ProCode
 # 生词表
 class NewWord(models.Model):
     fid = models.AutoField(primary_key=True)
-    fjword = models.ForeignKey(JaWord)
+    fnewword = models.ForeignKey(JaWord)
     fuser = models.ForeignKey(User)
     flevnum = models.IntegerField()
     fcreatedate = models.DateField(auto_now=True)

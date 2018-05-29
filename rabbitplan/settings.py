@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'welcome',
     'dictdata',
     'jpstudy',
+    'enstudy',
     'functest',
 ]
 
@@ -75,7 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',  # 原位置
+    #'whitenoise.middleware.WhiteNoiseMiddleware',  # 原位锟斤拷
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
@@ -171,7 +172,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
