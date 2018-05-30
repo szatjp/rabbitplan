@@ -36,12 +36,12 @@ class CnwordSeria(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CnWord
         fields = ('fwordno', 'fword', 'fpronunciation',
-                  'fwordclass', 'fuser', 'fdate')
+                  'fwordclass', 'frelaword', 'fuser', 'fdate')
         read_only_fields = ('fwordno','fuser')
 
 class EnwordSeria(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = EnWord
         fields = ('fwordno', 'fword', 'fpronunciation',
-                  'fwordclass', 'fuser', 'fdate')
+                  'fwordclass', 'frelaword', 'fuser', 'fdate')
         read_only_fields = ('fwordno','fuser')
