@@ -14,7 +14,7 @@ from django.http import HttpResponse
 
 from commonmd.models import FreshTime
 from dictdata.models import JaWord,EnWord
-from pip._vendor.chardet.jpcntx import jp2CharContext
+
 
 
 def downfunc(url,dbmodel):
