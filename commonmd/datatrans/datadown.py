@@ -64,7 +64,7 @@ def downfunc(url,dbmodel):
                 fuser = dictdata['fuser']          
                 )
             objli.append(dictobj)
-    JaWord.objects.bulk_create(objli)
+    dbmodel.objects.bulk_create(objli)
     freshdayobj.ffreshtime = datetime.datetime.now()
     freshdayobj.save()
     return 'success'
