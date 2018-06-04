@@ -13,7 +13,7 @@ import json
 from django.http import HttpResponse
 
 from commonmd.models import FreshTime
-from dictdata.models import JaWord,EnWord
+from dictdata.models import JaWord,EnWord,CnWord
 
 
 
@@ -78,7 +78,8 @@ def downdict(request):
     enurl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/enwords/'
     downfunc(enurl,EnWord)    
     # 下载中文字典
-    
+    cnurl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/cnwords/'
+    downfunc(cnurl,CnWord)    
     
     #url = 'http://127.0.0.1:8000/dict/jpwords/'
 
