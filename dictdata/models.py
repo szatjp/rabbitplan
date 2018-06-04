@@ -81,14 +81,29 @@ class EnSentence(models.Model):
     fdate = models.DateTimeField(auto_now=True)
     favail = models.CharField(max_length=1,default='1')
     
-# 翻译表
-class LanTrans(models.Model):
+# 日文汉语互译表
+class Ja2Cn(models.Model):
     fid = models.AutoField(primary_key=True)
     fjaword = models.ForeignKey(JaWord)
     fcnword = models.ForeignKey(CnWord)
+    fuser = models.CharField(null=True, max_length=30, blank=True) 
+    fdate = models.DateTimeField(auto_now=True)
+    
+# 日文英语互译表
+class Ja2En(models.Model):
+    fid = models.AutoField(primary_key=True)
+    fjaword = models.ForeignKey(JaWord)
     fenword = models.ForeignKey(EnWord)
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
+    
+# 英语汉语互译表
+class En2Cn(models.Model):
+    fid = models.AutoField(primary_key=True)
+    fenword = models.ForeignKey(EnWord)
+    fcnword = models.ForeignKey(CnWord)
+    fuser = models.CharField(null=True, max_length=30, blank=True) 
+    fdate = models.DateTimeField(auto_now=True)          
     
 # 日语单词例句
 class JaWordSen(models.Model):
