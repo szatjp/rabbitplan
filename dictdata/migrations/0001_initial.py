@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -39,8 +40,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('fid', models.AutoField(serialize=False, primary_key=True)),
                 ('fdate', models.DateTimeField(auto_now=True)),
-                ('fsentence', models.ForeignKey(to='dictdata.CnSentence')),
-                ('fword', models.ForeignKey(to='dictdata.CnWord')),
+                ('fsentence', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.CnSentence')),
+                ('fword', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.CnWord')),
             ],
         ),
         migrations.CreateModel(
@@ -72,8 +73,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('fid', models.AutoField(serialize=False, primary_key=True)),
                 ('fdate', models.DateTimeField(auto_now=True)),
-                ('fsentence', models.ForeignKey(to='dictdata.EnSentence')),
-                ('fword', models.ForeignKey(to='dictdata.EnWord')),
+                ('fsentence', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.EnSentence')),
+                ('fword', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.EnWord')),
             ],
         ),
         migrations.CreateModel(
@@ -105,8 +106,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('fid', models.AutoField(serialize=False, primary_key=True)),
                 ('fdate', models.DateTimeField(auto_now=True)),
-                ('fsentence', models.ForeignKey(to='dictdata.JaSentence')),
-                ('fword', models.ForeignKey(to='dictdata.JaWord')),
+                ('fsentence', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.JaSentence')),
+                ('fword', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.JaWord')),
             ],
         ),
         migrations.CreateModel(
@@ -115,9 +116,9 @@ class Migration(migrations.Migration):
                 ('fid', models.AutoField(serialize=False, primary_key=True)),
                 ('fuser', models.CharField(max_length=30, null=True, blank=True)),
                 ('fdate', models.DateTimeField(auto_now=True)),
-                ('fcnword', models.ForeignKey(to='dictdata.CnWord')),
-                ('fenword', models.ForeignKey(to='dictdata.EnWord')),
-                ('fjaword', models.ForeignKey(to='dictdata.JaWord')),
+                ('fcnword', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.CnWord')),
+                ('fenword', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.EnWord')),
+                ('fjaword', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.JaWord')),
             ],
         ),
     ]

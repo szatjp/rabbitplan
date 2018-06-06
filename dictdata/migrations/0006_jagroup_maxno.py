@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -16,7 +17,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('fminclass', models.CharField(max_length=30)),
-                ('fjword', models.ForeignKey(to='dictdata.JaWord')),
+                ('fjword', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.JaWord')),
             ],
             options={
                 'db_table': 'Wgroup',

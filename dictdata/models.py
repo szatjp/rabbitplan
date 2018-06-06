@@ -84,59 +84,59 @@ class EnSentence(models.Model):
 # 日文汉语互译表
 class Ja2Cn(models.Model):
     fid = models.AutoField(primary_key=True)
-    fjaword = models.ForeignKey(JaWord)
-    fcnword = models.ForeignKey(CnWord)
+    fjaword = models.ForeignKey(JaWord,on_delete=models.CASCADE,)
+    fcnword = models.ForeignKey(CnWord,on_delete=models.CASCADE,)
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
     
 # 日文英语互译表
 class Ja2En(models.Model):
     fid = models.AutoField(primary_key=True)
-    fjaword = models.ForeignKey(JaWord)
-    fenword = models.ForeignKey(EnWord)
+    fjaword = models.ForeignKey(JaWord,on_delete=models.CASCADE)
+    fenword = models.ForeignKey(EnWord,on_delete=models.CASCADE)
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
     
 # 英语汉语互译表
 class En2Cn(models.Model):
     fid = models.AutoField(primary_key=True)
-    fenword = models.ForeignKey(EnWord)
-    fcnword = models.ForeignKey(CnWord)
+    fenword = models.ForeignKey(EnWord,on_delete=models.CASCADE)
+    fcnword = models.ForeignKey(CnWord,on_delete=models.CASCADE)
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)          
     
 # 日语单词例句
 class JaWordSen(models.Model):
     fid = models.AutoField(primary_key=True)
-    fword = models.ForeignKey(JaWord)
-    fsentence = models.ForeignKey(JaSentence)
+    fword = models.ForeignKey(JaWord,on_delete=models.CASCADE)
+    fsentence = models.ForeignKey(JaSentence,on_delete=models.CASCADE)
     fdate = models.DateTimeField(auto_now=True)
     
 # 中文单词例句
 class CnWordSen(models.Model):
     fid = models.AutoField(primary_key=True)
-    fword = models.ForeignKey(CnWord)
-    fsentence = models.ForeignKey(CnSentence)
+    fword = models.ForeignKey(CnWord,on_delete=models.CASCADE)
+    fsentence = models.ForeignKey(CnSentence,on_delete=models.CASCADE)
     fdate = models.DateTimeField(auto_now=True)
     
 # 英语单词例句
 class EnWordSen(models.Model):
     fid = models.AutoField(primary_key=True)
-    fword = models.ForeignKey(EnWord)
-    fsentence = models.ForeignKey(EnSentence)
+    fword = models.ForeignKey(EnWord,on_delete=models.CASCADE)
+    fsentence = models.ForeignKey(EnSentence,on_delete=models.CASCADE)
     fdate = models.DateTimeField(auto_now=True)
     
 # 日语单词分类表
 class JaGroup(models.Model):
-    fjword = models.ForeignKey(JaWord)
+    fjword = models.ForeignKey(JaWord,on_delete=models.CASCADE)
     fminclass = models.CharField(max_length=30)
         
 # 英语单词分类表
 class EnGroup(models.Model):
-    feword = models.ForeignKey(EnWord)
+    feword = models.ForeignKey(EnWord,on_delete=models.CASCADE)
     fminclass = models.CharField(max_length=30)
         
 # 汉语单词分类表
 class CnGroup(models.Model):
-    fcword = models.ForeignKey(CnWord)
+    fcword = models.ForeignKey(CnWord,on_delete=models.CASCADE)
     fminclass = models.CharField(max_length=30)

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 from django.conf import settings
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -36,7 +37,7 @@ class Migration(migrations.Migration):
                 ('fedate', models.DateField(verbose_name=b'\xe7\xbb\x93\xe6\x9d\x9f\xe6\x97\xa5\xe6\x9c\x9f')),
                 ('fstime', models.DateField(verbose_name=b'\xe5\xbc\x80\xe5\xa7\x8b\xe8\xae\xb0\xe5\xbf\x86\xe6\x97\xb6\xe9\x97\xb4')),
                 ('fmail', models.BooleanField(verbose_name=b'\xe9\x82\xae\xe4\xbb\xb6\xe6\x8f\x90\xe9\x86\x92')),
-                ('fuser', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('fuser', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -45,8 +46,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('flevnum', models.IntegerField()),
                 ('fcreatedate', models.DateField(auto_now=True)),
-                ('fjword', models.ForeignKey(to='dictdata.JaWord')),
-                ('fuser', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('fjword', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='dictdata.JaWord')),
+                ('fuser', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -61,16 +62,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='curvegroup',
             name='fcurveword',
-            field=models.ForeignKey(to='jpstudy.CurveWord'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jpstudy.CurveWord'),
         ),
         migrations.AddField(
             model_name='curvegroup',
             name='fstateid',
-            field=models.ForeignKey(to='jpstudy.Procode'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jpstudy.Procode'),
         ),
         migrations.AddField(
             model_name='curvegroup',
             name='fuser',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
     ]

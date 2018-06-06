@@ -1,7 +1,7 @@
 # coding:utf-8
 
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import login,logout
@@ -30,27 +30,28 @@ urlpatterns = [
     # url(r'^$', 'project.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', index),
-    url(r'^', include(router.urls)),
-    url(r'^health$', health),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^dict/', include('dictdata.urls')),   # 字典应用
-    url(r'^functest/', include('functest.urls')),   # 功能测试
-    url(r'^jp/', include('jpstudy.urls')),   # 日语学习
-    url(r'^common/', include('commonmd.urls')),   # 共通模块
+    path('', index),
+    path('^', include(router.urls)),
+    path('health', health),
+    path('admin/', admin.site.urls),
+    #path('community/', include('aggregator.urls')),
+    path('dict/', include('dictdata.urls')),   # 字典应用
+    path('functest/', include('functest.urls')),   # 功能测试
+    path('jp/', include('jpstudy.urls')),   # 日语学习
+    path('common/', include('commonmd.urls')),   # 共通模块
 ]
 
 urlpatterns += [
-     url(r'^login$', login, name='login'),
+    path(r'^login$', login, name='login'),
 ]
 
 urlpatterns += [
-    url(r'^api-auth/', include('rest_framework.urls',
+    path(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        path(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns

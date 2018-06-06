@@ -6,7 +6,7 @@ Created on 2016年1月10日
 @author: szxatjp
 '''
 
-from django.conf.urls import url,include
+from django.urls import include, path
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework import renderers
 from rest_framework.routers import DefaultRouter
@@ -50,13 +50,13 @@ urlpatterns = [
     #url(r'^snippets/(?P<pk>[0-9]+)/$', views.SnippetDetail.as_view(),name='snippet-detail'), 
     #url(r'^$', views.api_root),
     #url(r'^snippets/(?P<pk>[0-9]+)/highlight/$', views.SnippetHighlight.as_view(),name='snippet-highlight'),
-    url(r'^', include(router.urls)),   
+    path(r'^', include(router.urls)),   
 ]
 
 #urlpatterns = format_suffix_patterns(urlpatterns)
 
 # Login and logout views for the browsable API
 urlpatterns += [
-    url(r'^api-auth/', include('rest_framework.urls',
+    path(r'^api-auth/', include('rest_framework.urls',
                                namespace='rest_framework')),
 ]

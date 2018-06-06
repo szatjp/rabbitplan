@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -14,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='curvegroup',
             name='fstateid',
-            field=models.ForeignKey(to='jpstudy.ProCode'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jpstudy.ProCode'),
         ),
     ]
