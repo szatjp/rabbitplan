@@ -44,7 +44,9 @@ else:
                      os.environ.get('OPENSHIFT_APP_DNS') # Dynamically map to the OpenShift gear name.
     ]
     
-
+ADMINS = (
+    ('tongjp', 'szxatjp@163.com'),
+)
 
 # Application definition
 
@@ -198,6 +200,17 @@ STATICFILES_DIRS = (
 
 STATICFILES_FINDERS = ["django.contrib.staticfiles.finders.FileSystemFinder",
  "django.contrib.staticfiles.finders.AppDirectoriesFinder"]
+
+# 默认邮件发送设置
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT='25'
+EMAIL_HOST_USER = 'szxatjp'
+EMAIL_HOST_PASSWORD = 'cbacba'
+SERVER_EMAIL = 'szxatjp@163.com'
+
+
+# 是否发送404错误跟踪邮件
+SEND_BROKEN_LINK_EMAILS = False
 
 INTERNAL_IPS = ['127.0.0.1']
 

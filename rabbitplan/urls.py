@@ -31,7 +31,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     path('', index),
-    path('^', include(router.urls)),
+    #path('^', include(router.urls)),
     path('health', health),
     path('admin/', admin.site.urls),
     #path('community/', include('aggregator.urls')),
@@ -42,16 +42,16 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path(r'^login$', login, name='login'),
+    path('login', login, name='login'),
 ]
 
 urlpatterns += [
-    path(r'^api-auth/', include('rest_framework.urls',
+    path('api-auth', include('rest_framework.urls',
                                namespace='rest_framework')),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        path(r'^__debug__/', include(debug_toolbar.urls)),
+        path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns

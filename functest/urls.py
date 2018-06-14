@@ -13,7 +13,7 @@ from dictdata.dictedit.dataopre import JpList,JpDetail,CnList,CnDetail,EnList,En
 from functest.restful.restfulcall import callrestful
 
 urlpatterns = [
-    path(r'^callrestapi/$', callrestful)   
+    path('callrestapi/', callrestful)   
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
