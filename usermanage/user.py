@@ -14,7 +14,6 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from django.template import RequestContext
 
-from chinaplas.pollforms import UserForm
 
 # 检验用户是否登录
 def userauth(request):
@@ -62,32 +61,6 @@ def userlist(request):
         return HttpResponseRedirect("/poll/") 
 '''       
         
-def register(request):
-    if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid():
-            reguser = form.clean()
-            user = User.objects.create_user(username=reguser['username'],
-                                            email='smc-oa@matsui.com.cn',
-                                            password=reguser['password'],
-                                            )
-            user.last_name=reguser['last_name']
-            user.first_name=reguser['first_name']
-            if reguser['is_staff']:
-                user.is_staff=True
-            else:
-                user.is_staff=False
-            if reguser['is_superuser']:
-                user.is_superuser=True
-            else:
-                user.is_superuser=False               
-            user.save()
-            return HttpResponseRedirect("/userlist/")
-    else:
-        form = UserForm()
-    return render_to_response("registration/register.html", {
-        'form': form,
-    })
     
 # 显示登录用户的个人页面
 def personhome(request):

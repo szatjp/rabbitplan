@@ -136,7 +136,7 @@ def findword(request):
             qrydict["noword"]='n'              
             return render(request,'person/myfind.html',qrydict)
     else:
-        return render(request,'person/myfind.html')
+        return render(request,'findword.html')
     
 
 # 将查询的单词添加到生词表
