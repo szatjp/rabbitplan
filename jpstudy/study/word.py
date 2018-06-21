@@ -123,6 +123,7 @@ def wordedit(request):
 def findword(request):
     if request.method == "POST":
         fword = request.POST.get('word','')
+        voption = request.POST.getlist('options','')[0]
         fword = fword.strip() #去除两端空格
         #调用查询函数
         qrydict = {}
@@ -130,11 +131,11 @@ def findword(request):
         #如果没有查到单词
         if qrydict == None:
             noword='y'
-            return render(request,'person/myfind.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
+            return render(request,'findword.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
         else:
             qrydict["sword"]=fword
             qrydict["noword"]='n'              
-            return render(request,'person/myfind.html',qrydict)
+            return render(request,'findword.html',qrydict)
     else:
         return render(request,'findword.html')
     

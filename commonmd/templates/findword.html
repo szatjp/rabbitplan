@@ -24,24 +24,25 @@ Template for Bootstrap {% endblock %} {% block topnav %}
 <main role="main" class="container">
 <div class="card mt-2">
 	<div class="card-header">
-		<form>
+		<form method="post">
+		    {% csrf_token %}
 		    <div class="form-group row">
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
 				<label class="btn btn-secondary active"> <input type="radio"
-					name="options" id="" autocomplete="off" checked>中/英
+					name="options" id="" autocomplete="off" value="cn2en" checked>中/英
 				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off">英/中
+					name="options" id="" autocomplete="off" value="en2cn">英/中
 				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off">中/日
+					name="options" id="" autocomplete="off" value="cn2jp">中/日
 				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off">日/中
+					name="options" id="" autocomplete="off" value="jp2cn">日/中
 				</label>
 			</div>
 			</div>
 			<div class="form-group row">
-				<label class="sr-only" for="inlineFormInputName2">Name</label> 
+				<label class="sr-only" for="word">单词</label> 
 				<input type="text" class="form-control mb-2 mr-sm-2 col-sm-6"
-					id="inlineFormInputName2" placeholder="Jane Doe">
+					id="word" name="word" placeholder="输入单词">
 				<button type="submit" class="btn btn-primary mb-2 col-sm-1">查询</button>
 			</div>
 		</form>
