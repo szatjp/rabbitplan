@@ -13,6 +13,9 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 
 from dictdata.models import JaWord   #,Nword,MaxNo,CurveGroup,
+
+from commonfunc.wordsfunc import findwords
+
 from jpstudy.models import NewWord  
 #from jpstudy.forms import JwordForm
 from jpstudy.sysfunc.commfunc import makecode
@@ -120,16 +123,18 @@ def wordedit(request):
 '''
 
 # 单词查询
-def findword(request):
+def searchword(request):
     if request.method == "POST":
         fword = request.POST.get('word','')
         voption = request.POST.getlist('options','')[0]
         fword = fword.strip() #去除两端空格
         #调用查询函数
+        wordli = findwords(voption,fword)
+        
         qrydict = {}
         qrydict["jword"] = JaWord.objects.filter(Q(fword__startswith=fword)|Q(fpronunciation__startswith=fword)) #findword(fword)      
         #如果没有查到单词
-        if qrydict == None:
+        if wordli == None:
             noword='y'
             return render(request,'findword.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
         else:

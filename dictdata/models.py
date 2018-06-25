@@ -18,7 +18,7 @@ class JaWord(models.Model):
     fword = models.CharField(max_length=30, blank=True) 
     fpronunciation = models.CharField(null=True, max_length=30, blank=True)
     fwordclass = models.CharField(null=True, max_length=12, blank=True)
-    frelaword = models.CharField(null=True, max_length=200, blank=True) 
+    frelaword = models.CharField(null=True, max_length=100, blank=True) 
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
     favail = models.CharField(max_length=1,default='1')
@@ -31,7 +31,7 @@ class CnWord(models.Model):
     fword = models.CharField(max_length=30, blank=True) 
     fpronunciation = models.CharField(null=True, max_length=30, blank=True)
     fwordclass = models.CharField(null=True, max_length=12, blank=True)
-    frelaword = models.CharField(null=True, max_length=200, blank=True)  
+    frelaword = models.CharField(null=True, max_length=100, blank=True)  
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
     favail = models.CharField(max_length=1,default='1')
@@ -44,7 +44,7 @@ class EnWord(models.Model):
     fword = models.CharField(max_length=30, blank=True) 
     fpronunciation = models.CharField(null=True, max_length=30, blank=True)
     fwordclass = models.CharField(null=True, max_length=12, blank=True)
-    frelaword = models.CharField(null=True, max_length=200, blank=True)  
+    frelaword = models.CharField(null=True, max_length=100, blank=True)  
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
     favail = models.CharField(max_length=1,default='1')
@@ -88,6 +88,8 @@ class Ja2Cn(models.Model):
     fcnword = models.ForeignKey(CnWord,on_delete=models.CASCADE,)
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
+    class Meta:
+        unique_together = ("fjaword", "fcnword")    
     
 # 日文英语互译表
 class Ja2En(models.Model):
@@ -96,6 +98,8 @@ class Ja2En(models.Model):
     fenword = models.ForeignKey(EnWord,on_delete=models.CASCADE)
     fuser = models.CharField(null=True, max_length=30, blank=True) 
     fdate = models.DateTimeField(auto_now=True)
+    class Meta:
+        unique_together = ("fjaword", "fenword")        
     
 # 英语汉语互译表
 class En2Cn(models.Model):
@@ -103,7 +107,9 @@ class En2Cn(models.Model):
     fenword = models.ForeignKey(EnWord,on_delete=models.CASCADE)
     fcnword = models.ForeignKey(CnWord,on_delete=models.CASCADE)
     fuser = models.CharField(null=True, max_length=30, blank=True) 
-    fdate = models.DateTimeField(auto_now=True)          
+    fdate = models.DateTimeField(auto_now=True)
+    class Meta:
+        unique_together = ("fenword", "fcnword")                
     
 # 日语单词例句
 class JaWordSen(models.Model):
