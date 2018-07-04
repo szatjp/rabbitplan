@@ -7,45 +7,56 @@
 <main role="main" class="container">
 <div class="card mt-2">
 	<div class="card-header">
-		<form method="post">
+		<form method="get">
 		    {% csrf_token %}
-		    <div class="form-group row">
-			<div class="btn-group btn-group-toggle" data-toggle="buttons">
-				<label class="btn btn-secondary active"> <input type="radio"
-					name="options" id="" autocomplete="off" value="cn2en" checked>中/英
-				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off" value="en2cn">英/中
-				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off" value="cn2jp">中/日
-				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off" value="jp2cn">日/中
-				</label>
-			</div>
-			</div>
-			<div class="form-group row">
-				<label class="sr-only" for="word">单词</label> 
-				<input type="text" class="form-control mb-2 mr-sm-2 col-sm-6"
-					id="word" name="word" placeholder="输入单词" required>
-				<button type="submit" class="btn btn-primary mb-2 col-sm-1">查询</button>
-			</div>
+
 		</form>
 	</div>
 	<div class="card-body">
-		<table>
+		<table class="table">
 		    <thead></thead>
 		    <tbody>
 		        <tr>
 		            <td>单词</td>
 		            <td>读音</td>
+		            <td></td>
 		        </tr>
 		        {% for object in object_list %}
 		        <tr>
 		            <td>{{ object.fword }}</td>
 		            <td>{{ object.fpronunciation }}</td>
+		            <td><a class="btn btn-primary btn-sm" role="button" href="">编辑</a></td>
 		        </tr>
 		        {% endfor %}
 		    </tbody>
 		</table>
+{% if is_paginated %}
+<div class="pagination">
+  {% if first %}
+    <a class="btn btn-secondary mr-1" role="button" href="?page=1">1</a>
+  {% endif %}
+  {% if left %}
+    {% if left_has_more %}
+        <span>...</span>
+    {% endif %}
+    {% for i in left %}
+        <a class="btn btn-secondary mr-1" role="button" href="?page={{ i }}">{{ i }}</a>
+    {% endfor %}
+  {% endif %}
+  <a class="btn btn-primary mr-1 active" role="button" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+  {% if right %}
+    {% for i in right %}
+        <a class="btn btn-secondary mr-1" role="button" href="?page={{ i }}">{{ i }}</a>
+    {% endfor %}
+    {% if right_has_more %}
+        <span>...</span>
+    {% endif %}
+  {% endif %}
+  {% if last %}
+    <a class="btn btn-secondary mr-1" role="button" href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+  {% endif %}
+</div>
+{% endif %}		
 	</div>
 </div>
 </main>

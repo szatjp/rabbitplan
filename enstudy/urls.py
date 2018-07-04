@@ -12,7 +12,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from jpstudy.study import word
 
 urlpatterns = [
-    path(r'^findword/$', word.findword),
+    #path(r'^findword/$', word.findword),
     re_path(r'^addnew/(\w+)/$', word.findtonew), 
 ]
 
