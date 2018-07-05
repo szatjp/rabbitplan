@@ -25,7 +25,7 @@
 		        <tr>
 		            <td>{{ object.fword }}</td>
 		            <td>{{ object.fpronunciation }}</td>
-		            <td><a class="btn btn-primary btn-sm" role="button" href="">编辑</a></td>
+		            <td><a class="btn btn-primary btn-sm" role="button" href="{{ object.get_absolute_url }}update/">编辑</a></td>
 		        </tr>
 		        {% endfor %}
 		    </tbody>

@@ -13,6 +13,7 @@ from django.db.models import Max
 
 from commonfunc.commfunc import makecode
 from dictdata.models import CnWord,En2Cn
+from django.views.generic.detail import DetailView
 
 class CnWordLi(ListView):
     #queryset = CnWord.objects.all()
@@ -155,9 +156,21 @@ class CnWordLi(ListView):
 class CnWordCreate(CreateView):
     model = CnWord
     fields = ['fword','fpronunciation','fwordclass']
+    template_name = 'dictedit/worddet.html'
     def get_context_data(self, **kwargs):
         context = super(CnWordCreate, self).get_context_data(**kwargs)
         return context
+    def form_valid(self, form):
+        prestr = 'cn'
+        lastno = CnWord.objects.filter().aggregate(Max('fwordno'))
+        if not lastno['fwordno__max']:
+            maxno = prestr+'000000'
+        else:
+            maxno = lastno['fwordno__max']
+        wordno = makecode(maxno,prestr,8)        
+        form.instance.fwordno = wordno
+        return super().form_valid(form)    
+    '''
     def post(self, request,*args, **kwargs):        
         prestr = 'cn'
         lastno = CnWord.objects.filter().aggregate(Max('fwordno'))
@@ -167,6 +180,7 @@ class CnWordCreate(CreateView):
             maxno = lastno['fwordno__max']
         wordno = makecode(maxno,prestr,8)
         wordobj = CnWord()
+        wordobj.fwordno = wordno
         wordobj.fword = wordno
         #wordobj.fpronunciation = 
         #wordobj.fwordclass =
@@ -176,11 +190,18 @@ class CnWordCreate(CreateView):
         except:
             errinfo = "新增失败，请检查依赖号是否已经存在！"
             return render(request,'inbill/billerror.html',{"errinfo":errinfo})
-        #return HttpResponseRedirect(self.success_url+str(billobj.fid))    
+        #return HttpResponseRedirect(self.success_url+str(billobj.fid)) 
+    '''   
 
-class CnWordUpdate(UpdateView):
+class CnWordUpdate(DetailView):
     model = CnWord
     fields = ['fword','fpronunciation','fwordclass']
+    template_name = 'dictedit/worddet.html'
+    
+class CnWordDetail(UpdateView):
+    model = CnWord
+    fields = ['fword','fpronunciation','fwordclass']
+    template_name = 'dictedit/worddet.html'
 
 class CnWordDelete(DeleteView):
     model = CnWord

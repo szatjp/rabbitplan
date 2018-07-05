@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.template.defaultfilters import default
+from django.urls import reverse
 
 # Create your models here.
 
@@ -24,6 +25,8 @@ class JaWord(models.Model):
     favail = models.CharField(max_length=1,default='1')
     class Meta:
         unique_together = ("fword", "fpronunciation")
+    def get_absolute_url(self):
+        return reverse('jaword-detail', args=[self.fwordno])         
     
 # 中文单词表
 class CnWord(models.Model):
@@ -37,6 +40,9 @@ class CnWord(models.Model):
     favail = models.CharField(max_length=1,default='1')
     class Meta:
         unique_together = ("fword", "fpronunciation")
+    def get_absolute_url(self):
+        return reverse('cnword-detail', args=[self.fwordno])           
+       
     
 # 英语单词表
 class EnWord(models.Model):

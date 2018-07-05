@@ -6,7 +6,7 @@ Created on 2018年7月3日
 @author: matsui
 '''
 
-from django.views.generic import ListView,CreateView,UpdateView,DeleteView
+from django.views.generic import ListView,CreateView,DetailView,UpdateView,DeleteView
 from django.shortcuts import render,get_object_or_404
 from django.urls import reverse_lazy
 from django.db.models import Max
@@ -178,8 +178,14 @@ class JaWordCreate(CreateView):
             return render(request,'inbill/billerror.html',{"errinfo":errinfo})
         #return HttpResponseRedirect(self.success_url+str(billobj.fid))    
 
+class JaWordDetail(DetailView):
+    model = JaWord
+    template_name = 'dictedit/worddet.html'
+    fields = ['fword','fpronunciation','fwordclass']
+
 class JaWordUpdate(UpdateView):
     model = JaWord
+    template_name = 'dictedit/worddet.html'
     fields = ['fword','fpronunciation','fwordclass']
 
 class JaWordDelete(DeleteView):

@@ -1,0 +1,54 @@
+{% extends 'html5base.html' %} 
+{% load i18n %} 
+{% block title %} Blog Template for Bootstrap {% endblock %}
+
+
+{% block contents %}
+<main role="main" class="container">
+<div class="card mt-2">
+	<div class="card-header">
+
+	</div>
+	<div class="card-body">
+	<form method="post">
+	{% csrf_token %}
+  <div class="form-group row">
+    <label for="fword" class="col-sm-1 col-form-label">单词</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="fword" name="fword" value="{{ form.fword.value }}">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="fpronunciation" class="col-sm-1 col-form-label">读音</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="fpronunciation" name="fpronunciation" value="{{ form.fpronunciation.value }}">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="fwordclass" class="col-sm-1 col-form-label">词性</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="fwordclass" name="fwordclass" value="{{ form.fwordclass.value }}">
+    </div>
+  </div>  
+  <div class="form-group row">
+  <div class="col-sm-5"></div>
+  <button type="submit" class="btn btn-primary mb-2">保存</button>
+  </div>	
+	</form>
+	</div>
+</div>
+</main>
+<!-- /.container -->
+{% endblock %} 
+
+{% block js %}
+<script>
+	Holder.addTheme('thumb', {
+		bg : '#55595c',
+		fg : '#eceeef',
+		text : 'Thumbnail'
+	});
+</script>
+{% endblock %}
+</body>
+</html>
