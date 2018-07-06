@@ -19,12 +19,14 @@
 		        <tr>
 		            <td>单词</td>
 		            <td>读音</td>
+		            <td>词性</td>
 		            <td></td>
 		        </tr>
 		        {% for object in object_list %}
 		        <tr>
 		            <td>{{ object.fword }}</td>
 		            <td>{{ object.fpronunciation }}</td>
+		            <td>{{ object.fwordclass }}</td>
 		            <td><a class="btn btn-primary btn-sm" role="button" href="{{ object.get_absolute_url }}update/">编辑</a></td>
 		        </tr>
 		        {% endfor %}

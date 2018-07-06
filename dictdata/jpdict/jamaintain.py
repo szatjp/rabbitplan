@@ -185,7 +185,7 @@ class JaWordDetail(DetailView):
 
 class JaWordUpdate(UpdateView):
     model = JaWord
-    template_name = 'dictedit/worddet.html'
+    template_name = 'dictedit/wordedit.html'
     fields = ['fword','fpronunciation','fwordclass']
 
 class JaWordDelete(DeleteView):

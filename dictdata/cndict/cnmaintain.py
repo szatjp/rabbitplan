@@ -193,15 +193,15 @@ class CnWordCreate(CreateView):
         #return HttpResponseRedirect(self.success_url+str(billobj.fid)) 
     '''   
 
-class CnWordUpdate(DetailView):
+class CnWordDetail(DetailView):
     model = CnWord
     fields = ['fword','fpronunciation','fwordclass']
     template_name = 'dictedit/worddet.html'
     
-class CnWordDetail(UpdateView):
+class CnWordUpdate(UpdateView):
     model = CnWord
     fields = ['fword','fpronunciation','fwordclass']
-    template_name = 'dictedit/worddet.html'
+    template_name = 'dictedit/wordedit.html'
 
 class CnWordDelete(DeleteView):
     model = CnWord
