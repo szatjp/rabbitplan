@@ -20,6 +20,7 @@
 		            <td>单词</td>
 		            <td>读音</td>
 		            <td>词性</td>
+		            <td>中文释义</td>
 		            <td></td>
 		        </tr>
 		        {% for object in object_list %}
@@ -27,6 +28,7 @@
 		            <td>{{ object.fword }}</td>
 		            <td>{{ object.fpronunciation }}</td>
 		            <td>{{ object.fwordclass }}</td>
+		            <td>{{ object.ja2cn_set.all }}</td>
 		            <td><a class="btn btn-primary btn-sm" role="button" href="{{ object.get_absolute_url }}update/">编辑</a></td>
 		        </tr>
 		        {% endfor %}
