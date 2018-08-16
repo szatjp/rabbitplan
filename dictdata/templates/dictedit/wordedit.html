@@ -1,5 +1,6 @@
 {% extends 'html5base.html' %} 
-{% load i18n %} 
+{% load i18n %}
+{% load filter_extras %}
 {% block title %} Blog Template for Bootstrap {% endblock %}
 
 
@@ -33,7 +34,7 @@
   <div class="form-group row">
     <label for="fwordclass" class="col-sm-3 col-form-label text-right">释义</label>
     <div class="col-sm-6">
-      {{ object.__meta }}
+      {{ object|modelname }}
       <a></a>
     </div>
   </div>     
