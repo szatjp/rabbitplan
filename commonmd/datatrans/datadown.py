@@ -18,7 +18,7 @@ from dictdata.models import JaWord,EnWord,CnWord
 
 
 def downfunc(url,dbmodel):
-    url = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/jpwords/'
+    #url = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/jpwords/'
     #url = 'http://127.0.0.1:8000/dict/jpwords/'
 
     #postData = urllib.parse.urlencode(data).encode('utf-8')
