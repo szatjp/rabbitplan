@@ -17,7 +17,7 @@ from dictdata.dictedit.dataserialize import JawordSeria, CnwordSeria, EnwordSeri
 
 
 class JpFilter(filters.FilterSet):
-    freshdate = filters.IsoDateTimeFilter(name="fdate", lookup_expr='gte')
+    freshdate = filters.IsoDateTimeFilter(field_name="fdate", lookup_expr='gte')
     class Meta:
         model = JaWord
         fields = ['fwordno','fword','fpronunciation','freshdate']
