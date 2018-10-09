@@ -9,12 +9,30 @@ from dictdata.models import JaWord
 from commonmd.models import ProCode
 
 
+# 生词组和进度
+class CurveGroup(models.Model):
+    fid = models.AutoField(primary_key=True)
+    fgroupnum = models.CharField(null=True,max_length=20,verbose_name="组号")
+    #fcurveword = models.ForeignKey(CurveWord,on_delete=models.CASCADE) # 关联到单词组使用的选取条件
+    fstateid = models.ForeignKey(ProCode,on_delete=models.CASCADE) # 单词组进度代码
+#    fstateid = ndb.IntegerProperty(required=True)
+    fuser = models.ForeignKey(User,on_delete=models.CASCADE) # 用户
+    fstime = models.DateField() # 预订开始记忆日期
+    fftime = models.DateTimeField(null=True) # 记忆完成时间
+    fntime = models.DateTimeField(null=True) # 下次记忆时间
+    fsmail =models.NullBooleanField() # 是否需要发送Email提醒
+    ffmail = models.BooleanField(default = False) # 是否完成Email通知
+    ffmemory = models.NullBooleanField() # 是否完成记忆过程 
+    
+    
 # 生词表
 class NewWord(models.Model):
     fid = models.AutoField(primary_key=True)
     fnewword = models.ForeignKey(JaWord,on_delete=models.CASCADE)
     fuser = models.ForeignKey(User,on_delete=models.CASCADE)
-    flevnum = models.IntegerField()
+    flevnum = models.IntegerField(null=True)
+    fcurvegroup = models.ForeignKey(CurveGroup,on_delete=models.CASCADE,null=True,verbose_name="生词组") # 关联到单词组使用的选取条件
+    fgroupnum = models.CharField(null=True,max_length=20,verbose_name="组号")
     fcreatedate = models.DateField(auto_now=True)
 
     
@@ -22,24 +40,9 @@ class NewWord(models.Model):
 class CurveWord(models.Model):
     fid = models.AutoField(primary_key=True)
     fnumlimit = models.IntegerField(verbose_name="每组数量")
-    fgroupclass = models.CharField(max_length=30)
+    fgroupclass = models.CharField(max_length=30,verbose_name="生词组号")
     fuser = models.ForeignKey(User,on_delete=models.CASCADE)
-    fsdate = models.DateField(verbose_name="开始日期") #选取范围起始日期
-    fedate = models.DateField(verbose_name="结束日期") #选取范围结束日期
+    #fsdate = models.DateField(verbose_name="开始日期") #选取范围起始日期
+    #fedate = models.DateField(verbose_name="结束日期") #选取范围结束日期
     fstime = models.DateField(verbose_name="开始记忆时间") #开始记忆时间    
     fmail = models.BooleanField(verbose_name="邮件提醒") #是否需要发送Email提醒
-    
-# 单词组和进度
-class CurveGroup(models.Model):
-    fid = models.AutoField(primary_key=True)
-    fcurveword = models.ForeignKey(CurveWord,on_delete=models.CASCADE) # 关联到单词组使用的选取条件
-    fstateid = models.ForeignKey(ProCode,on_delete=models.CASCADE) 
-#    fstateid = ndb.IntegerProperty(required=True)
-    fuser = models.ForeignKey(User,on_delete=models.CASCADE) # 用户
-    fstime = models.DateField() # 预订开始记忆日期
-    fftime = models.DateTimeField(null=True) # 记忆完成时间
-    fntime = models.DateTimeField(null=True) # 下次记忆时间
-    fgroupnum = models.IntegerField()
-    fsmail =models.NullBooleanField() # 是否需要发送Email提醒
-    ffmail = models.BooleanField(default = False) # 是否完成Email通知
-    ffmemory = models.NullBooleanField() # 是否完成记忆过程   
