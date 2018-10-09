@@ -136,13 +136,13 @@ def searchword(request):
         #如果没有查到单词
         if wordli == None:
             noword='y'
-            return render(request,'findword.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
+            return render(request,'jword/wordsearch.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
         else:
             qrydict["sword"]=fword
             qrydict["noword"]='n'              
-            return render(request,'findword.html',qrydict)
+            return render(request,'jword/wordsearch.html',qrydict)
     else:
-        return render(request,'findword.html')
+        return render(request,'jword/wordsearch.html')
     
 
 # 将查询的单词添加到生词表

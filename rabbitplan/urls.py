@@ -41,9 +41,15 @@ urlpatterns = [
     path('common/', include('commonmd.urls')),   # 共通模块
 ]
 
+urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
+]
+
+'''
 urlpatterns += [
     path('login', login, name='login'),
 ]
+'''
 
 urlpatterns += [
     path('api-auth', include('rest_framework.urls',
