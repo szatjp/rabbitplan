@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 from django.db.models import Max
 
 from commonfunc.commfunc import makecode
-from dictdata.models import JaWord,Ja2Cn
+from dictdata.models import JaWord,Ja2Cn,Ja2En
 
 class JaWordLi(ListView):
     #queryset = CnWord.objects.all()
@@ -187,6 +187,17 @@ class JaWordUpdate(UpdateView):
     model = JaWord
     template_name = 'dictedit/wordedit.html'
     fields = ['fword','fpronunciation','fwordclass']
+    def get_context_data(self, **kwargs):
+        context = super(JaWordUpdate, self).get_context_data(**kwargs)
+        tranluan = []
+        # 日到中
+        jatocns = Ja2Cn.objects.filter(fjaword=self.object)
+        # 日到英
+        jatoens = Ja2En.objects.filter(fjaword=self.object)
+        tranluan.append({"title":"中文释义","trtype":"jatocn","words":jatocns})
+        tranluan.append({"title":"英文释义","trtype":"jatoen","words":jatoens})
+        context['trans'] = tranluan 
+        return context
 
 class JaWordDelete(DeleteView):
     model = JaWord

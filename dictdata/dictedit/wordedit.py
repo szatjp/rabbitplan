@@ -7,9 +7,11 @@ Created on 2018年6月25日
 '''
 
 from django.views.generic import ListView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render,get_object_or_404
 
-from dictdata.models import JaWord,CnWord,EnWord
+
+from dictdata.models import JaWord,CnWord,EnWord,Ja2Cn
+
 
 class WordList(ListView):
     template_name = 'books/books_by_publisher.html'
@@ -21,4 +23,12 @@ class WordList(ListView):
         context = super().get_context_data(**kwargs)
         # Add in the publisher
         context['publisher'] = self.publisher
-        return context    
+        return context 
+
+def transadd(request,wordno,trantype):   
+    if trantype=='jatocn':
+        if JaWord.objects.filter(fwordno=wordno).exists():
+            wordobj = JaWord.objects.get(fwordno=wordno)
+        #if Ja2Cn.objects.filter(fjaword__fwordno=wordno).exists():
+        #    jatocns = Ja2Cn.objects.get(fjaword__fwordno=wordno)
+    return render(request,'dictedit/transedit.html', {"word":wordobj})  
