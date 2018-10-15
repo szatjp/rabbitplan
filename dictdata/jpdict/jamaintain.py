@@ -155,28 +155,21 @@ class JaWordLi(ListView):
 class JaWordCreate(CreateView):
     model = JaWord
     fields = ['fword','fpronunciation','fwordclass']
+    template_name = 'dictedit/worddet.html'
     def get_context_data(self, **kwargs):
         context = super(JaWordCreate, self).get_context_data(**kwargs)
         return context
-    def post(self, request,*args, **kwargs):        
+    def form_valid(self, form):
         prestr = 'ja'
         lastno = JaWord.objects.filter().aggregate(Max('fwordno'))
         if not lastno['fwordno__max']:
             maxno = prestr+'000000'
         else:
             maxno = lastno['fwordno__max']
-        wordno = makecode(maxno,prestr,8)
-        wordobj = JaWord()
-        wordobj.fword = wordno
-        #wordobj.fpronunciation = 
-        #wordobj.fwordclass =
-        wordobj.fuser = request.user.first_name        
-        try:
-            wordobj.save()
-        except:
-            errinfo = "新增失败，请检查依赖号是否已经存在！"
-            return render(request,'inbill/billerror.html',{"errinfo":errinfo})
-        #return HttpResponseRedirect(self.success_url+str(billobj.fid))    
+        wordno = makecode(maxno,prestr,8)        
+        form.instance.fwordno = wordno
+        return super().form_valid(form)     
+       
 
 class JaWordDetail(DetailView):
     model = JaWord
@@ -191,9 +184,9 @@ class JaWordUpdate(UpdateView):
         context = super(JaWordUpdate, self).get_context_data(**kwargs)
         tranluan = []
         # 日到中
-        jatocns = Ja2Cn.objects.filter(fjaword=self.object)
+        jatocns = Ja2Cn.objects.values_list('fcnword__fwordno','fcnword__fword','fcnword__fpronunciation').filter(fjaword=self.object)
         # 日到英
-        jatoens = Ja2En.objects.filter(fjaword=self.object)
+        jatoens = Ja2En.objects.values_list('fenword__fwordno','fenword__fword','fenword__fpronunciation').filter(fjaword=self.object)
         tranluan.append({"title":"中文释义","trtype":"jatocn","words":jatocns})
         tranluan.append({"title":"英文释义","trtype":"jatoen","words":jatoens})
         context['trans'] = tranluan 
