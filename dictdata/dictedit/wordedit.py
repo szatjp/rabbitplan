@@ -9,6 +9,7 @@ Created on 2018年6月25日
 from django.views.generic import ListView
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from dictdata.models import JaWord,CnWord,EnWord,Ja2Cn
 from dictdata.appcomm.dictedit import funaddword
@@ -33,6 +34,8 @@ def transadd(request,wordno,trantype):
             wordobj = JaWord.objects.get(fwordno=wordno)
         #if Ja2Cn.objects.filter(fjaword__fwordno=wordno).exists():
         #    jatocns = Ja2Cn.objects.get(fjaword__fwordno=wordno)
+    if request.method == "GET":
+        return render(request,'dictedit/transedit.html', {"word":wordobj,"trantype":trantype}) 
     if request.method == "POST":
         #worddict = {}
         word = request.POST.get('fword','')
@@ -55,14 +58,14 @@ def transadd(request,wordno,trantype):
                 else:
                     # 如果单词释义存在，但单词翻译不存在，则进入翻译选择页面则添加释义表
                     #CnWord.objects.filter(fword=word).exclude(fjaword=wordobj,)
-                    if Ja2Cn.objects.filter(fjaword=wordobj).exists():
-                        ja2cnobj = Ja2Cn(
-                            #fjaword =
-                            #fcnword =
-                            )                         
-                    else:
-                        ja2cnobj = Ja2Cn(
-                            #fjaword =
-                            #fcnword =
-                            )                                 
-    return render(request,'dictedit/transedit.html', {"word":wordobj,"trantype":trantype})  
+                    if len(transword)==1:
+                        transobj = CnWord.objects.get(fword=word)
+                        if not Ja2Cn.objects.filter(fjaword=wordobj,fcnword=transobj).exists():
+                            ja2cnobj = Ja2Cn(
+                                fjaword = wordobj,
+                                fcnword = transobj,
+                                fuser = request.user.first_name
+                                )                         
+                            ja2cnobj.save()
+        return HttpResponseRedirect('/dict/jaword/'+wordobj.fwordno+'/update/')
+                                   
