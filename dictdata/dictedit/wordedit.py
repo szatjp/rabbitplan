@@ -11,8 +11,9 @@ from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
-from dictdata.models import JaWord,CnWord,EnWord,Ja2Cn
+from dictdata.models import JaWord,CnWord,EnWord,Ja2Cn,En2Cn,Ja2En
 from dictdata.appcomm.dictedit import funaddword,addtran
+from markdown.extensions import fenced_code
 
 
 class WordList(ListView):
@@ -32,15 +33,22 @@ def transadd(request,wordno,trantype):
     if trantype=='jatocn':
         if JaWord.objects.filter(fwordno=wordno).exists():
             wordobj = JaWord.objects.get(fwordno=wordno)
-        #if Ja2Cn.objects.filter(fjaword__fwordno=wordno).exists():
-        #    jatocns = Ja2Cn.objects.get(fjaword__fwordno=wordno)
+    if trantype=='cntoja':
+        if CnWord.objects.filter(fwordno=wordno).exists():
+            wordobj = CnWord.objects.get(fwordno=wordno)
+    if trantype in ('entocn','entoja'):
+        if EnWord.objects.filter(fwordno=wordno).exists():
+            wordobj = EnWord.objects.get(fwordno=wordno)
+    if trantype=='cntoen':
+        if CnWord.objects.filter(fwordno=wordno).exists():
+            wordobj = CnWord.objects.get(fwordno=wordno)            
     if request.method == "GET":
         return render(request,'dictedit/transedit.html', {"word":wordobj,"trantype":trantype}) 
     if request.method == "POST":
         #worddict = {}
         word = request.POST.get('fword','')
         pronunciation = request.POST.get('fpronunciation','')
-        if trantype=='jatocn':
+        if trantype=='jatocn': # 日译中
             if JaWord.objects.filter(fwordno=wordno).exists():
                 wordobj = JaWord.objects.get(fwordno=wordno)
                 transword = CnWord.objects.filter(fword=word) # 释义的单词是否存在
@@ -68,7 +76,7 @@ def transadd(request,wordno,trantype):
                                 )                         
                             ja2cnobj.save()
             return HttpResponseRedirect('/dict/jaword/'+wordobj.fwordno+'/update/')
-        if trantype=='cntoja':
+        if trantype=='cntoja': # 中译日
             if CnWord.objects.filter(fwordno=wordno).exists():
                 wordobj = CnWord.objects.get(fwordno=wordno)
                 transword = JaWord.objects.filter(fword=word) # 释义的单词是否存在
@@ -96,4 +104,87 @@ def transadd(request,wordno,trantype):
                                 )                         
                             ja2cnobj.save()
             return HttpResponseRedirect('/dict/cnword/'+wordobj.fwordno+'/update/')
-                                   
+        if trantype=='cntoen': # 中译英
+            if CnWord.objects.filter(fwordno=wordno).exists():
+                wordobj = CnWord.objects.get(fwordno=wordno)
+                transword = EnWord.objects.filter(fword=word) # 释义的单词是否存在
+                if len(transword)==0:
+                    # 如果释义的单词不存在，添加该单词
+                    addresult = funaddword('en',request.user.first_name,{"word":word,"pronunciation":pronunciation})
+                    if addresult['statu']=='Success':
+                        transobj = addresult['wordobj']
+                        lang2lang = En2Cn(
+                            fenword = transobj,
+                            fcnword = wordobj,
+                            fuser = request.user.first_name
+                            ) 
+                        lang2lang.save()  # 添加翻译表记录
+                else:
+                    # 如果单词释义存在，但单词翻译不存在，则进入翻译选择页面则添加释义表
+                    #CnWord.objects.filter(fword=word).exclude(fjaword=wordobj,)
+                    if len(transword)==1:
+                        transobj = EnWord.objects.get(fword=word)
+                        if not En2Cn.objects.filter(fcnword=wordobj,fenword=transobj).exists():
+                            lang2lang = En2Cn(
+                                fenword = transobj,
+                                fcnword = wordobj,
+                                fuser = request.user.first_name
+                                )                         
+                            lang2lang.save()
+            return HttpResponseRedirect('/dict/cnword/'+wordobj.fwordno+'/update/')
+        if trantype=='entocn':  # 英译中
+            if EnWord.objects.filter(fwordno=wordno).exists():
+                wordobj = EnWord.objects.get(fwordno=wordno)
+                transword = CnWord.objects.filter(fword=word) # 释义的单词是否存在
+                if len(transword)==0:
+                    # 如果释义的单词不存在，添加该单词
+                    addresult = funaddword('cn',request.user.first_name,{"word":word,"pronunciation":pronunciation})
+                    if addresult['statu']=='Success':
+                        transobj = addresult['wordobj']
+                        lang2lang = En2Cn(
+                            fenword = wordobj,
+                            fcnword = transobj,
+                            fuser = request.user.first_name
+                            ) 
+                        lang2lang.save()  # 添加翻译表记录
+                else:
+                    # 如果单词释义存在，但单词翻译不存在，则进入翻译选择页面则添加释义表
+                    #CnWord.objects.filter(fword=word).exclude(fjaword=wordobj,)
+                    if len(transword)==1:
+                        transobj = CnWord.objects.get(fword=word)
+                        if not En2Cn.objects.filter(fenword=wordobj,fcnword=transobj).exists():
+                            lang2lang = En2Cn(
+                                fenword = wordobj,
+                                fcnword = transobj,
+                                fuser = request.user.first_name
+                                )                         
+                            lang2lang.save()
+            return HttpResponseRedirect('/dict/enword/'+wordobj.fwordno+'/update/')                
+        if trantype=='entoja':  # 英译日
+            if EnWord.objects.filter(fwordno=wordno).exists():
+                wordobj = EnWord.objects.get(fwordno=wordno)
+                transword = JaWord.objects.filter(fword=word) # 释义的单词是否存在
+                if len(transword)==0:
+                    # 如果释义的单词不存在，添加该单词
+                    addresult = funaddword('ja',request.user.first_name,{"word":word,"pronunciation":pronunciation})
+                    if addresult['statu']=='Success':
+                        transobj = addresult['wordobj']
+                        lang2lang = Ja2En(
+                            fenword = wordobj,
+                            fjaword = transobj,
+                            fuser = request.user.first_name
+                            ) 
+                        lang2lang.save()  # 添加翻译表记录
+                else:
+                    # 如果单词释义存在，但单词翻译不存在，则进入翻译选择页面则添加释义表
+                    #CnWord.objects.filter(fword=word).exclude(fjaword=wordobj,)
+                    if len(transword)==1:
+                        transobj = JaWord.objects.get(fword=word)
+                        if not Ja2En.objects.filter(fenword=wordobj,fjaword=transobj).exists():
+                            lang2lang = Ja2En(
+                                fenword = wordobj,
+                                fjaword = transobj,
+                                fuser = request.user.first_name
+                                )                         
+                            lang2lang.save()
+            return HttpResponseRedirect('/dict/enword/'+wordobj.fwordno+'/update/')                                    

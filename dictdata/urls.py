@@ -14,6 +14,7 @@ from dictdata.dictedit.wordedit import transadd
 
 from dictdata.cndict.cnmaintain import CnWordLi,CnWordCreate,CnWordDetail,CnWordUpdate
 from dictdata.jpdict.jamaintain import JaWordLi,JaWordCreate,JaWordDetail,JaWordUpdate
+from dictdata.endict.enmaintain import EnWordLi,EnWordCreate,EnWordDetail,EnWordUpdate
 
 urlpatterns = [
     path('jpwords/', JpList.as_view()),
@@ -31,6 +32,10 @@ urlpatterns = [
     path('jaword/add/', JaWordCreate.as_view(), name='jaword-add'),
     path('jaword/<slug:pk>/', JaWordDetail.as_view(), name='jaword-detail'), 
     path('jaword/<slug:pk>/update/', JaWordUpdate.as_view(), name='jaword-update'),
+    path('enword/', EnWordLi.as_view()),
+    path('enword/add/', EnWordCreate.as_view(), name='enword-add'),
+    path('enword/<slug:pk>/', EnWordDetail.as_view(), name='enword-detail'), 
+    path('enword/<slug:pk>/update/', EnWordUpdate.as_view(), name='enword-update'),    
     
     re_path('transadd/(\w+)/(\w+)/', transadd, name='trans-add'),             
 ]

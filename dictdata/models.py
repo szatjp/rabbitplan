@@ -56,6 +56,8 @@ class EnWord(models.Model):
     favail = models.CharField(max_length=1,default='1')
     class Meta:
         unique_together = ("fword", "fpronunciation", "fwordclass")
+    def get_absolute_url(self):
+        return reverse('enword-detail', args=[self.fwordno])        
     
 # 日语例句表
 class JaSentence(models.Model):
