@@ -11,6 +11,7 @@ from django.shortcuts import render,get_object_or_404
 from django.urls import reverse_lazy
 from django.db.models import Max
 
+
 from commonfunc.commfunc import makecode
 from dictdata.models import CnWord,En2Cn,Ja2Cn
 from django.views.generic.detail import DetailView
@@ -157,6 +158,7 @@ class CnWordCreate(CreateView):
     model = CnWord
     fields = ['fword','fpronunciation','fwordclass']
     template_name = 'dictedit/worddet.html'
+    success_url = reverse_lazy('cnword-detail')
     def get_context_data(self, **kwargs):
         context = super(CnWordCreate, self).get_context_data(**kwargs)
         return context
@@ -169,7 +171,12 @@ class CnWordCreate(CreateView):
             maxno = lastno['fwordno__max']
         wordno = makecode(maxno,prestr,8)        
         form.instance.fwordno = wordno
-        return super().form_valid(form)    
+        if 'savenext' in form.data.keys():
+            self.success_url = reverse_lazy('cnword-add')
+        return super().form_valid(form)
+    '''def get_success_url(self):
+        if self.request.has_key('savenext'):
+            return reverse_lazy('cnword-add') '''   
     '''
     def post(self, request,*args, **kwargs):        
         prestr = 'cn'

@@ -167,6 +167,8 @@ class EnWordCreate(CreateView):
             maxno = lastno['fwordno__max']
         wordno = makecode(maxno,prestr,8)        
         form.instance.fwordno = wordno
+        if 'savenext' in form.data.keys():
+            self.success_url = reverse_lazy('enword-add')        
         return super().form_valid(form)     
        
 
