@@ -23,7 +23,7 @@ class CnWordLi(ListView):
     def get_queryset(self):
         #self.publisher = get_object_or_404(CnWord, name=self.kwargs['fword'])
         #words = En2Cn.objects.filter(fcnword__fword__icontains=self.kwargs['fword'])
-        words = CnWord.objects.all()
+        words = CnWord.objects.all().order_by('fwordno')
         return words
     def get_context_data(self, **kwargs):
         """
@@ -158,7 +158,7 @@ class CnWordCreate(CreateView):
     model = CnWord
     fields = ['fword','fpronunciation','fwordclass']
     template_name = 'dictedit/worddet.html'
-    success_url = reverse_lazy('cnword-detail')
+    #success_url = reverse_lazy('cnword-detail')
     def get_context_data(self, **kwargs):
         context = super(CnWordCreate, self).get_context_data(**kwargs)
         return context
@@ -174,31 +174,7 @@ class CnWordCreate(CreateView):
         if 'savenext' in form.data.keys():
             self.success_url = reverse_lazy('cnword-add')
         return super().form_valid(form)
-    '''def get_success_url(self):
-        if self.request.has_key('savenext'):
-            return reverse_lazy('cnword-add') '''   
-    '''
-    def post(self, request,*args, **kwargs):        
-        prestr = 'cn'
-        lastno = CnWord.objects.filter().aggregate(Max('fwordno'))
-        if not lastno['fwordno__max']:
-            maxno = prestr+'000000'
-        else:
-            maxno = lastno['fwordno__max']
-        wordno = makecode(maxno,prestr,8)
-        wordobj = CnWord()
-        wordobj.fwordno = wordno
-        wordobj.fword = wordno
-        #wordobj.fpronunciation = 
-        #wordobj.fwordclass =
-        wordobj.fuser = request.user.first_name        
-        try:
-            wordobj.save()
-        except:
-            errinfo = "新增失败，请检查依赖号是否已经存在！"
-            return render(request,'inbill/billerror.html',{"errinfo":errinfo})
-        #return HttpResponseRedirect(self.success_url+str(billobj.fid)) 
-    '''   
+
 
 class CnWordDetail(DetailView):
     model = CnWord

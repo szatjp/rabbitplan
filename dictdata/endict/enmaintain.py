@@ -20,7 +20,7 @@ class EnWordLi(ListView):
     def get_queryset(self):
         #self.publisher = get_object_or_404(CnWord, name=self.kwargs['fword'])
         #words = En2Cn.objects.filter(fcnword__fword__icontains=self.kwargs['fword'])
-        words = EnWord.objects.all()
+        words = EnWord.objects.all().order_by('fwordno')
         return words
     def get_context_data(self, **kwargs):
         """
