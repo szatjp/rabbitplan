@@ -21,7 +21,7 @@ class JaWordLi(ListView):
     def get_queryset(self):
         #self.publisher = get_object_or_404(CnWord, name=self.kwargs['fword'])
         #words = En2Cn.objects.filter(fcnword__fword__icontains=self.kwargs['fword'])
-        words = JaWord.objects.all().order_by('fwordno')
+        words = JaWord.objects.values('fwordno','fword','fpronunciation','fwordclass').all().order_by('fwordno')
         return words
     def get_context_data(self, **kwargs):
         """
@@ -175,7 +175,7 @@ class JaWordCreate(CreateView):
 
 class JaWordDetail(DetailView):
     model = JaWord
-    template_name = 'dictedit/worddet.html'
+    template_name = 'dictedit/wordview.html'
     fields = ['fword','fpronunciation','fwordclass']
 
 class JaWordUpdate(UpdateView):
