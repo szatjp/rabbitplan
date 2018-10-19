@@ -169,12 +169,17 @@ class EnWordCreate(CreateView):
         form.instance.fwordno = wordno
         if 'savenext' in form.data.keys():
             self.success_url = reverse_lazy('enword-add')        
-        return super().form_valid(form)     
+        return super().form_valid(form)
+    def get_success_url(self):
+        if 'savenext' in self.request.POST:
+            return reverse_lazy('enword-add')
+        if 'save' in self.request.POST:
+            return reverse_lazy('enword-detail',kwargs={"pk":self.object.fwordno})          
        
 
 class EnWordDetail(DetailView):
     model = EnWord
-    template_name = 'dictedit/worddet.html'
+    template_name = 'dictedit/wordview.html'
     fields = ['fword','fpronunciation','fwordclass']
 
 class EnWordUpdate(UpdateView):

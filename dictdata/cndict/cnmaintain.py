@@ -171,15 +171,18 @@ class CnWordCreate(CreateView):
             maxno = lastno['fwordno__max']
         wordno = makecode(maxno,prestr,8)        
         form.instance.fwordno = wordno
-        if 'savenext' in form.data.keys():
-            self.success_url = reverse_lazy('cnword-add')
         return super().form_valid(form)
+    def get_success_url(self):
+        if 'savenext' in self.request.POST:
+            return reverse_lazy('cnword-add')
+        if 'save' in self.request.POST:
+            return reverse_lazy('cnword-detail',kwargs={"pk":self.object.fwordno})            
 
 
 class CnWordDetail(DetailView):
     model = CnWord
     fields = ['fword','fpronunciation','fwordclass']
-    template_name = 'dictedit/worddet.html'
+    template_name = 'dictedit/wordview.html'
     
 class CnWordUpdate(UpdateView):
     model = CnWord
