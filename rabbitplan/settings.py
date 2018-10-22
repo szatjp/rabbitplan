@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'commonmd',
-    'commonapp',
+    'userstudy',
     'welcome',
     'dictdata',
     'jpstudy',

@@ -39,6 +39,7 @@ urlpatterns = [
     path('functest/', include('functest.urls')),   # 功能测试
     path('jp/', include('jpstudy.urls')),   # 日语学习
     path('common/', include('commonmd.urls')),   # 共通模块
+    path('ustudy/', include('userstudy.urls')),   # 共通模块
 ]
 
 urlpatterns += [
