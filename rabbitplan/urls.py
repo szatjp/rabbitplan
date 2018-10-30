@@ -34,6 +34,7 @@ urlpatterns = [
     #path('^', include(router.urls)),
     path('health', health),
     path('admin/', admin.site.urls),
+    path('user/', include('usermanage.urls')),   # 用户管理
     #path('community/', include('aggregator.urls')),
     path('dict/', include('dictdata.urls')),   # 字典应用
     path('functest/', include('functest.urls')),   # 功能测试
