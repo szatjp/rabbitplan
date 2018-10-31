@@ -6,10 +6,10 @@ Created on 2011-11-22
 @author: tongjp
 '''
 
-import types, json
+import json
 from django.db import models
 #from django.utils import simplejson as json
-from django.core.serializers.json import DateTimeAwareJSONEncoder
+from django.core.serializers.json import DjangoJSONEncoder
 from decimal import *
 
 def json_encode(data):
@@ -21,9 +21,9 @@ def json_encode(data):
 
     def _any(data):
         ret = None
-        if type(data) is types.ListType:
+        if type(data) is list:
             ret = _list(data)
-        elif type(data) is types.DictType:
+        elif type(data) is dict:
             ret = _dict(data)
         elif isinstance(data, Decimal):
             # json.dumps() cant handle Decimal
@@ -63,4 +63,4 @@ def json_encode(data):
    
     ret = _any(data)
    
-    return json.dumps(ret, cls=DateTimeAwareJSONEncoder)
+    return json.dumps(ret, cls=DjangoJSONEncoder)
