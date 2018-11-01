@@ -22,6 +22,18 @@ class JpFilter(filters.FilterSet):
         model = JaWord
         fields = ['fwordno','fword','fpronunciation','freshdate']
         
+class CnFilter(filters.FilterSet):
+    freshdate = filters.IsoDateTimeFilter(field_name="fdate", lookup_expr='gte')
+    class Meta:
+        model = CnWord
+        fields = ['fwordno','fword','fpronunciation','freshdate']
+        
+class EnFilter(filters.FilterSet):
+    freshdate = filters.IsoDateTimeFilter(field_name="fdate", lookup_expr='gte')
+    class Meta:
+        model = EnWord
+        fields = ['fwordno','fword','fpronunciation','freshdate']
+        
         
 class JpList(generics.ListCreateAPIView):
     queryset = JaWord.objects.all()
@@ -45,6 +57,7 @@ class JpDetail(generics.RetrieveUpdateDestroyAPIView):
 class CnList(generics.ListCreateAPIView):
     queryset = CnWord.objects.all()
     serializer_class = CnwordSeria
+    filter_class = CnFilter
     def perform_create(self, serializer):
         prestr = 'cn'
         lastno = CnWord.objects.filter().aggregate(Max('fwordno'))
@@ -63,6 +76,7 @@ class CnDetail(generics.RetrieveUpdateDestroyAPIView):
 class EnList(generics.ListCreateAPIView):
     queryset = EnWord.objects.all()
     serializer_class = EnwordSeria
+    filter_class = EnFilter
     def perform_create(self, serializer):
         prestr = 'en'
         lastno = EnWord.objects.filter().aggregate(Max('fwordno'))
