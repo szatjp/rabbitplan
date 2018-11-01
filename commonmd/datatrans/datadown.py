@@ -19,22 +19,13 @@ from dictdata.models import JaWord,EnWord,CnWord,Ja2Cn,Ja2En,En2Cn
 
 
 # 下载字典
-def downfunc(url,dbmodel):
+def downfunc(url,dbmodel,freshdate):
     #url = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/jpwords/'
     #url = 'http://127.0.0.1:8000/dict/jpwords/'
 
     #postData = urllib.parse.urlencode(data).encode('utf-8')
     #restreq = urllib.request.Request(url,postData,{'Content-Type': 'application/json'})
-    
-    if FreshTime.objects.filter().exists():
-        freshdayobj = FreshTime.objects.get()
-        freshdate = freshdayobj.ffreshtime-datetime.timedelta(days=1)
-    else:
-        freshdate = '2018-01-01 00:00:00'
-        freshdayobj = FreshTime(
-            ffreshtime = freshdate
-            )
-        freshdayobj.save()
+
     
     values = {'freshdate' : freshdate}
     
@@ -66,28 +57,18 @@ def downfunc(url,dbmodel):
                 fuser = dictdata['fuser']          
                 )
             objli.append(dictobj)
-    dbmodel.objects.bulk_create(objli)
-    freshdayobj.ffreshtime = datetime.datetime.now()
-    freshdayobj.save()
+    if objli:
+        dbmodel.objects.bulk_create(objli)
     return 'success'
 
 # 下载互译表
-def downtrans(url,trantype):
+def downtrans(url,trantype,freshdate):
     #url = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/jpwords/'
     #url = 'http://127.0.0.1:8000/dict/jpwords/'
 
     #postData = urllib.parse.urlencode(data).encode('utf-8')
     #restreq = urllib.request.Request(url,postData,{'Content-Type': 'application/json'})
-    
-    if FreshTime.objects.filter().exists():
-        freshdayobj = FreshTime.objects.get()
-        freshdate = freshdayobj.ffreshtime-datetime.timedelta(days=1)
-    else:
-        freshdate = '2018-01-01 00:00:00'
-        freshdayobj = FreshTime(
-            ffreshtime = freshdate
-            )
-        freshdayobj.save()
+
     
     values = {'freshdate' : freshdate}
     
@@ -110,30 +91,67 @@ def downtrans(url,trantype):
                     fdate = dictdata['fdate']        
                     )
                 objli.append(dictobj)
-        Ja2Cn.objects.bulk_create(objli)
-    freshdayobj.ffreshtime = datetime.datetime.now()
-    freshdayobj.save()
+        if objli:
+            Ja2Cn.objects.bulk_create(objli)
+    objli = []
+    if trantype=="ja2en":
+        for dictdata in jsondata:
+            if not Ja2En.objects.filter(fjaword=dictdata['fjaword'],fenword=dictdata['fenword']).exists():    
+                dictobj = Ja2En(
+                    fjaword = dictdata['fjaword'],
+                    fenword = dictdata['fenword'],
+                    fuser = dictdata['fuser'],
+                    fdate = dictdata['fdate']        
+                    )
+                objli.append(dictobj)
+        if objli:
+            Ja2En.objects.bulk_create(objli)            
+    if trantype=="en2cn":
+        for dictdata in jsondata:
+            if not En2Cn.objects.filter(fenword=dictdata['fenword'],fcnword=dictdata['fcnword']).exists():    
+                dictobj = En2Cn(
+                    fenword = dictdata['fenword'],
+                    fcnword = dictdata['fcnword'],
+                    fuser = dictdata['fuser'],
+                    fdate = dictdata['fdate']        
+                    )
+                objli.append(dictobj)
+        if objli:
+            En2Cn.objects.bulk_create(objli)
     return 'success'
 
 def downdict(request):
+    if FreshTime.objects.filter().exists():
+        freshdayobj = FreshTime.objects.get()
+        freshdate = freshdayobj.ffreshtime-datetime.timedelta(days=1)
+    else:
+        freshdate = '2018-01-01 00:00:00'
+        freshdayobj = FreshTime(
+            ffreshtime = freshdate
+            )
+        freshdayobj.save()
     # 下载日语字典
     jpurl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/jpwords/'
-    downfunc(jpurl,JaWord)
+    downfunc(jpurl,JaWord,freshdate)
     # 下载英语字典
     enurl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/enwords/'
-    downfunc(enurl,EnWord)    
+    downfunc(enurl,EnWord,freshdate)    
     # 下载中文字典
     cnurl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/cnwords/'
-    downfunc(cnurl,CnWord)    
+    downfunc(cnurl,CnWord,freshdate)    
+    
+    freshdayobj.ffreshtime = datetime.datetime.now()
+    freshdayobj.save()    
+    
     # 日中互译表
     geturl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/common/jctrans/'
-    downtrans(geturl,'ja2cn')
+    downtrans(geturl,'ja2cn',freshdate)
     # 日英互译表
     geturl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/common/jetrans/'
-    downtrans(geturl,'ja2en')
+    downtrans(geturl,'ja2en',freshdate)
     # 英中互译表
     geturl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/common/ectrans/'
-    downtrans(geturl,'en2cn')        
+    downtrans(geturl,'en2cn',freshdate)        
     #url = 'http://127.0.0.1:8000/dict/jpwords/'
 
     #postData = urllib.parse.urlencode(data).encode('utf-8')
