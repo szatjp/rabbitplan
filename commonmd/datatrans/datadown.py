@@ -74,7 +74,7 @@ def downtrans(url,trantype,freshdate):
     
     data = urllib.parse.urlencode(values)
     #data = data.encode('utf8') # data should be bytes
-    full_url = url + '?' + data
+    full_url = url# + '?' + data
     req = urllib.request.Request(full_url)    
     #restreq = urllib.request.Request(url) 
     response = urllib.request.urlopen(req)
@@ -84,9 +84,11 @@ def downtrans(url,trantype,freshdate):
     if trantype=="ja2cn":
         for dictdata in jsondata:
             if not Ja2Cn.objects.filter(fjaword=dictdata['fjaword'],fcnword=dictdata['fcnword']).exists():    
+                jaobj = JaWord.objects.get(pk=dictdata['fjaword'])
+                cnobj = CnWord.objects.get(pk=dictdata['fcnword'])
                 dictobj = Ja2Cn(
-                    fjaword = dictdata['fjaword'],
-                    fcnword = dictdata['fcnword'],
+                    fjaword = jaobj,
+                    fcnword = cnobj,
                     fuser = dictdata['fuser'],
                     fdate = dictdata['fdate']        
                     )
@@ -130,6 +132,7 @@ def downdict(request):
             ffreshtime = freshdate
             )
         freshdayobj.save()
+    '''
     # 下载日语字典
     jpurl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/jpwords/'
     downfunc(jpurl,JaWord,freshdate)
@@ -142,7 +145,8 @@ def downdict(request):
     
     freshdayobj.ffreshtime = datetime.datetime.now()
     freshdayobj.save()    
-    
+  '''
+          
     # 日中互译表
     geturl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/common/jctrans/'
     downtrans(geturl,'ja2cn',freshdate)
