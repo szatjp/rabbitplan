@@ -98,10 +98,12 @@ def downtrans(url,trantype,freshdate):
     objli = []
     if trantype=="ja2en":
         for dictdata in jsondata:
-            if not Ja2En.objects.filter(fjaword=dictdata['fjaword'],fenword=dictdata['fenword']).exists():    
+            if not Ja2En.objects.filter(fjaword=dictdata['fjaword'],fenword=dictdata['fenword']).exists():
+                jaobj = JaWord.objects.get(pk=dictdata['fjaword'])
+                enobj = EnWord.objects.get(pk=dictdata['fenword'])
                 dictobj = Ja2En(
-                    fjaword = dictdata['fjaword'],
-                    fenword = dictdata['fenword'],
+                    fjaword = jaobj,
+                    fenword = enobj,
                     fuser = dictdata['fuser'],
                     fdate = dictdata['fdate']        
                     )
@@ -111,9 +113,11 @@ def downtrans(url,trantype,freshdate):
     if trantype=="en2cn":
         for dictdata in jsondata:
             if not En2Cn.objects.filter(fenword=dictdata['fenword'],fcnword=dictdata['fcnword']).exists():    
+                enobj = EnWord.objects.get(pk=dictdata['fenword'])
+                cnobj = CnWord.objects.get(pk=dictdata['fcnword'])
                 dictobj = En2Cn(
-                    fenword = dictdata['fenword'],
-                    fcnword = dictdata['fcnword'],
+                    fenword = enobj,
+                    fcnword = cnobj,
                     fuser = dictdata['fuser'],
                     fdate = dictdata['fdate']        
                     )
