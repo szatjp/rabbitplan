@@ -11,30 +11,36 @@
 		    {% csrf_token %}
 		    <div class="form-group row">
 			<div class="btn-group btn-group-toggle" data-toggle="buttons">
-				<label class="btn btn-secondary active"> <input type="radio"
-					name="options" id="" autocomplete="off" value="cn2en" checked>中/英
-				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off" value="en2cn">英/中
-				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off" value="cn2jp">中/日
-				</label> <label class="btn btn-secondary"> <input type="radio"
-					name="options" id="" autocomplete="off" value="jp2cn">日/中
+				<label class="btn btn-secondary {% if op == 'cn2en' %}active{% endif %}"> <input type="radio"
+					name="options" id="" autocomplete="off" value="cn2en" {% if op == 'cn2en' %}checked{% endif %}>中/英
+				</label> 
+				<label class="btn btn-secondary {% if op == 'en2cn' %}active{% endif %}"> <input type="radio"
+					name="options" id="" autocomplete="off" value="en2cn" {% if op == 'en2cn' %}checked{% endif %}>英/中
+				</label> 
+				<label class="btn btn-secondary {% if op == 'cn2jp' %}active{% endif %}"> <input type="radio"
+					name="options" id="" autocomplete="off" value="cn2jp" {% if op == 'cn2jp' %}checked{% endif %}>中/日
+				</label> 
+				<label class="btn btn-secondary {% if op == 'jp2cn' %}active{% endif %}"> <input type="radio"
+					name="options" id="" autocomplete="off" value="jp2cn" {% if op == 'jp2cn' %}checked{% endif %}>日/中
 				</label>
 			</div>
 			</div>
 			<div class="form-group row">
 				<label class="sr-only" for="word">单词</label> 
 				<input type="text" class="form-control mb-2 mr-sm-2 col-sm-6"
-					id="word" name="word" placeholder="输入单词" required>
+					id="word" name="word" placeholder="输入单词" value="{{ sword }}" required>
 				<button type="submit" class="btn btn-primary mb-2 col-sm-1">查询</button>
 			</div>
 		</form>
 	</div>
 	<div class="card-body">
-		<h5 class="card-title">Special title treatment</h5>
-		<p class="card-text">With supporting text below as a natural
-			lead-in to additional content.</p>
-		<a href="#" class="btn btn-primary">Go somewhere</a>
+		<ul class="list-group list-group-flush">
+		{% for word in wordli %}
+		<li class="list-group-item">{{ word.fword }}&emsp;[{{ word.fpronunciation }}]&emsp;&emsp;
+		      <a class="btn btn-primary btn-sm" href="#" role="button">加入生词本</a>
+		</li>
+		{% endfor %}
+		</ul>
 	</div>
 </div>
 </main>

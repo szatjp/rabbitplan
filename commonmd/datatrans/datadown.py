@@ -136,7 +136,7 @@ def downdict(request):
             ffreshtime = freshdate
             )
         freshdayobj.save()
-    '''
+    
     # 下载日语字典
     jpurl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/jpwords/'
     downfunc(jpurl,JaWord,freshdate)
@@ -146,11 +146,7 @@ def downdict(request):
     # 下载中文字典
     cnurl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/dict/cnwords/'
     downfunc(cnurl,CnWord,freshdate)    
-    
-    freshdayobj.ffreshtime = datetime.datetime.now()
-    freshdayobj.save()    
-  '''
-          
+           
     # 日中互译表
     geturl = 'http://django-psql-persistent-rabbitplan.193b.starter-ca-central-1.openshiftapps.com/common/jctrans/'
     downtrans(geturl,'ja2cn',freshdate)
@@ -164,6 +160,10 @@ def downdict(request):
 
     #postData = urllib.parse.urlencode(data).encode('utf-8')
     #restreq = urllib.request.Request(url,postData,{'Content-Type': 'application/json'})
+    
+    freshdayobj.ffreshtime = datetime.datetime.now()
+    freshdayobj.save()  
+    
     return HttpResponse("字典下载成功！")
 
 # 日汉json

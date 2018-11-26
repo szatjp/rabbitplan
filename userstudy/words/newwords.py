@@ -16,7 +16,7 @@ from dictdata.models import JaWord   #,Nword,MaxNo,CurveGroup,
 
 from commonfunc.wordsfunc import findwords
 
-from jpstudy.models import NewWord  
+from jpstudy.models import JpNewWord  
 #from jpstudy.forms import JwordForm
 from jpstudy.sysfunc.commfunc import makecode
 
@@ -128,18 +128,20 @@ def searchword(request):
         fword = request.POST.get('word','')
         voption = request.POST.getlist('options','')[0]
         fword = fword.strip() #去除两端空格
+        qrydict = {}
         #调用查询函数
         wordli = findwords(voption,fword)
-        
-        qrydict = {}
-        qrydict["jword"] = JaWord.objects.filter(Q(fword__startswith=fword)|Q(fpronunciation__startswith=fword)) #findword(fword)      
+        qrydict["op"] = voption
+        qrydict["wordli"] = wordli      
         #如果没有查到单词
         if wordli == None:
             noword='y'
+            #qrydict["wordli"] = None
             return render(request,'wordstudy/findword.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
         else:
             qrydict["sword"]=fword
-            qrydict["noword"]='n'              
+            qrydict["noword"]='n' 
+            #qrydict["wordli"] = wordli             
             return render(request,'wordstudy/findword.html',qrydict)
     else:
         return render(request,'wordstudy/findword.html')
@@ -150,14 +152,14 @@ def findtonew(request,newword):
     if request.method == "GET":
         curuser = request.user #User.objects.get(pk=request.user.pk)
         jword = JaWord(pk=newword)
-        wordobj = NewWord.objects.filter(fjword=jword,fuser=curuser)     
+        wordobj = JpNewWord.objects.filter(fjword=jword,fuser=curuser)     
         # 如用户已存在此生词，陌生度加1
         if wordobj:
             for newword in wordobj:
                 levnum=newword.flevnum+1
                 newword.flevnum=levnum
         else:
-            newword = NewWord(
+            newword = JpNewWord(
                             fuser=curuser,
                             fjword=jword,
                             flevnum=1,

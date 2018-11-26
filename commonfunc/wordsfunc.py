@@ -14,18 +14,22 @@ def findwords(pdict,pword):
     if pdict=='cn2en':
         cnwords = CnWord.objects.filter(fword__icontains=pword)
         if cnwords:
-            wordli = En2Cn.objects.filter(fcnword__fword__icontains=pword).order_by('fcnword')
+            ids = En2Cn.objects.values_list('fenword__fwordno', flat=True).filter(fcnword__fword__icontains=pword)
+            wordli = EnWord.objects.values('fwordno','fword','fpronunciation').filter(fwordno__in=ids).order_by('fword')
     elif pdict=='en2cn':
         enwords = EnWord.objects.filter(fword__icontains=pword)
         if enwords:
-            wordli = En2Cn.objects.filter(fenword__fword__icontains=pword).order_by('fenword')
+            ids = En2Cn.objects.values_list('fcnword__fwordno', flat=True).filter(fenword__fword__icontains=pword)
+            wordli = CnWord.objects.values('fwordno','fword','fpronunciation').filter(fwordno__in=ids).order_by('fword')
     elif pdict=='cn2jp':
         cnwords = CnWord.objects.filter(fword__icontains=pword)
         if cnwords:
-            wordli = Ja2Cn.objects.filter(fcnword__fword__icontains=pword).order_by('fcnword')
+            ids = Ja2Cn.objects.values_list('fjaword__fwordno', flat=True).filter(fcnword__fword__icontains=pword)
+            wordli = JaWord.objects.values('fwordno','fword','fpronunciation').filter(fwordno__in=ids).order_by('fword')
     elif pdict=='jp2cn':
         jawords = JaWord.objects.filter(Q(fword__startswith=pword)|Q(fpronunciation__startswith=pword))
         if jawords:
-            wordli = Ja2Cn.objects.filter(fjaword__fword__icontains=pword).order_by('fjaword')
+            ids = Ja2Cn.objects.values_list('fcnword__fwordno', flat=True).filter(fjaword__fword__icontains=pword)
+            wordli = CnWord.objects.values('fwordno','fword','fpronunciation').filter(fwordno__in=ids).order_by('fword')
     return wordli
     
