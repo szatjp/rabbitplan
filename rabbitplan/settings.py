@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'commonmd',
     'usermanage',
+    'sysadmin',
     'userstudy',
     'welcome',
     'dictdata',

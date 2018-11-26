@@ -40,7 +40,8 @@ urlpatterns = [
     path('functest/', include('functest.urls')),   # 功能测试
     path('jp/', include('jpstudy.urls')),   # 日语学习
     path('common/', include('commonmd.urls')),   # 共通模块
-    path('ustudy/', include('userstudy.urls')),   # 共通模块
+    path('ustudy/', include('userstudy.urls')),   # 用户学习共通模块
+    path('system/', include('sysadmin.urls')),   # 系统设置模块
 ]
 
 urlpatterns += [
