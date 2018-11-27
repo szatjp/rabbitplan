@@ -130,41 +130,42 @@ def searchword(request):
         fword = fword.strip() #去除两端空格
         qrydict = {}
         #调用查询函数
-        wordli = findwords(voption,fword)
+        result = findwords(voption,fword)
         qrydict["op"] = voption
-        qrydict["wordli"] = wordli      
+        qrydict["wordli"] = result['wordli']      
         #如果没有查到单词
-        if wordli == None:
+        if result['wordli'] == None:
             noword='y'
             #qrydict["wordli"] = None
             return render(request,'wordstudy/findword.html',{'sword':fword,'noword':noword},context_instance=RequestContext(request))             
         else:
             qrydict["sword"]=fword
             qrydict["noword"]='n' 
-            #qrydict["wordli"] = wordli             
+            qrydict["lang"] = result['lang']             
             return render(request,'wordstudy/findword.html',qrydict)
     else:
         return render(request,'wordstudy/findword.html')
     
 
 # 将查询的单词添加到生词表
-def findtonew(request,newword):
+def findtonew(request,lang,newword):
     if request.method == "GET":
         curuser = request.user #User.objects.get(pk=request.user.pk)
-        jword = JaWord(pk=newword)
-        wordobj = JpNewWord.objects.filter(fjword=jword,fuser=curuser)     
-        # 如用户已存在此生词，陌生度加1
-        if wordobj:
-            for newword in wordobj:
-                levnum=newword.flevnum+1
-                newword.flevnum=levnum
-        else:
-            newword = JpNewWord(
-                            fuser=curuser,
-                            fjword=jword,
-                            flevnum=1,
-                                 )
-        newword.save()
+        if lang=='ja':
+            jword = JaWord(pk=newword)
+            wordobjs = JpNewWord.objects.filter(fnewword=jword,fuser=curuser)     
+            # 如用户已存在此生词，陌生度加1      
+            if wordobjs:
+                for wordobj in wordobjs:
+                    levnum=wordobj.flevnum+1
+                    wordobj.flevnum=levnum
+            else:
+                wordobj = JpNewWord(
+                                fuser=curuser,
+                                fnewword=jword,
+                                flevnum=1,
+                                     )
+            wordobj.save()
     # 返回调用的页面
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

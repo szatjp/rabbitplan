@@ -13,7 +13,7 @@ from userstudy.words.newwords import searchword,findtonew
 
 urlpatterns = [
     path('findword/', searchword),
-    re_path(r'^addnew/(\w+)/$', findtonew),
+    re_path(r'^addnew/(\w+)/(\w+)/$', findtonew),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
