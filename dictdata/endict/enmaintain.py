@@ -190,9 +190,9 @@ class EnWordUpdate(UpdateView):
         context = super(EnWordUpdate, self).get_context_data(**kwargs)
         tranluan = []
         # 英到中
-        entocns = En2Cn.objects.values_list('fenword__fwordno','fcnword__fword','fcnword__fpronunciation').filter(fenword=self.object)
+        entocns = En2Cn.objects.values_list('fid','fenword__fwordno','fcnword__fword','fcnword__fpronunciation').filter(fenword=self.object)
         # 英到日
-        entojas = Ja2En.objects.values_list('fjaword__fwordno','fjaword__fword','fjaword__fpronunciation').filter(fenword=self.object)
+        entojas = Ja2En.objects.values_list('fid','fjaword__fwordno','fjaword__fword','fjaword__fpronunciation').filter(fenword=self.object)
         tranluan.append({"title":"中文释义","trtype":"entocn","words":entocns})
         tranluan.append({"title":"日文释义","trtype":"entoja","words":entojas})
         context['trans'] = tranluan 

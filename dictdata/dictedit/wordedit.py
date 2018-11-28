@@ -187,4 +187,19 @@ def transadd(request,wordno,trantype):
                                 fuser = request.user.first_name
                                 )                         
                             lang2lang.save()
-            return HttpResponseRedirect('/dict/enword/'+wordobj.fwordno+'/update/')                                    
+            return HttpResponseRedirect('/dict/enword/'+wordobj.fwordno+'/update/')
+        
+@login_required
+def transdel(request,fid,trantype):   
+    if trantype in ('jatocn','cntoja'):
+        if Ja2Cn.objects.filter(pk=fid).exists():
+            Ja2Cn.objects.filter(pk=fid).delete()
+    if trantype in ('entocn','cntoen'):
+        if En2Cn.objects.filter(pk=fid).exists():
+            En2Cn.objects.filter(pk=fid).delete()
+    if trantype in ('jatoen','entoja'):
+        if Ja2En.objects.filter(pk=fid).exists():
+            Ja2En.objects.filter(pk=fid).delete()            
+
+    # 返回调用的页面
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))                                    

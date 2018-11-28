@@ -10,7 +10,7 @@ from django.urls import path,re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from dictdata.dictedit.dataopre import JpList,JpDetail,CnList,CnDetail,EnList,EnDetail
-from dictdata.dictedit.wordedit import transadd
+from dictdata.dictedit.wordedit import transadd,transdel
 
 from dictdata.cndict.cnmaintain import CnWordLi,CnWordCreate,CnWordDetail,CnWordUpdate
 from dictdata.jpdict.jamaintain import JaWordLi,JaWordCreate,JaWordDetail,JaWordUpdate
@@ -37,7 +37,8 @@ urlpatterns = [
     path('enword/<slug:pk>/', EnWordDetail.as_view(), name='enword-detail'), 
     path('enword/<slug:pk>/update/', EnWordUpdate.as_view(), name='enword-update'),    
     
-    re_path('transadd/(\w+)/(\w+)/', transadd, name='trans-add'),             
+    re_path('transadd/(\w+)/(\w+)/', transadd, name='trans-add'),
+    re_path('transdel/(\w+)/(\w+)/', transdel, name='trans-del'),             
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

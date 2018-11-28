@@ -36,8 +36,8 @@
 	<div class="card-body">
 		<ul class="list-group list-group-flush">
 		{% for word in wordli %}
-		<li class="list-group-item">{{ word.fword }}&emsp;[{{ word.fpronunciation }}]&emsp;&emsp;
-		      <a class="btn btn-primary btn-sm" href="/ustudy/addnew/{{ lang }}/{{ word.fwordno }}/" role="button">加入生词本</a>
+		<li class="list-group-item">{{ word.1 }}&emsp;[{{ word.2 }}]&emsp;&emsp;{{ word.4 }}&emsp;&emsp;
+		      <a class="btn btn-primary btn-sm" href="/ustudy/addnew/{{ lang }}/{{ word.0 }}/" role="button">加入生词本</a>
 		</li>
 		{% endfor %}
 		</ul>

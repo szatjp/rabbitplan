@@ -193,9 +193,9 @@ class CnWordUpdate(UpdateView):
         context = super(CnWordUpdate, self).get_context_data(**kwargs)
         tranluan = []
         # 日到中
-        jatocns = Ja2Cn.objects.values_list('fjaword__fwordno','fjaword__fword','fjaword__fpronunciation').filter(fcnword=self.object)
+        jatocns = Ja2Cn.objects.values_list('fid','fjaword__fwordno','fjaword__fword','fjaword__fpronunciation').filter(fcnword=self.object)
         # 英到中
-        entocns = En2Cn.objects.values_list('fenword__fwordno','fenword__fword','fenword__fpronunciation').filter(fcnword=self.object)
+        entocns = En2Cn.objects.values_list('fid','fenword__fwordno','fenword__fword','fenword__fpronunciation').filter(fcnword=self.object)
         tranluan.append({"title":"英文释义","trtype":"cntoen","words":entocns})
         tranluan.append({"title":"日文释义","trtype":"cntoja","words":jatocns})
         context['trans'] = tranluan 

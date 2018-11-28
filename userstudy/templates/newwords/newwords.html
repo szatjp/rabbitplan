@@ -1,0 +1,80 @@
+{% extends 'html5base.html' %} 
+{% load i18n %} 
+{% block title %} Blog Template for Bootstrap {% endblock %}
+
+
+{% block contents %}
+<main role="main" class="container">
+<div class="card mt-2">
+	<div class="card-header">
+		<form method="get">
+		    {% csrf_token %}
+
+		</form>
+	</div>
+	<div class="card-body">
+		<table class="table">
+		    <thead></thead>
+		    <tbody>
+		        <tr>
+		            <td>单词</td>
+		            <td>读音</td>
+		            <td>词性</td>
+		            <td>中文释义</td>
+		            <td></td>
+		        </tr>
+		        {% for object in object_list %}
+		        <tr>
+		            <td>{{ object.fword }}</td>
+		            <td>{{ object.fpronunciation }}</td>
+		            <td>{{ object.fwordclass }}</td>
+		            <td>{{ object.ja2cn_set.all }}</td>
+		            <td><a class="btn btn-primary btn-sm" role="button" href="{{ object.fwordno }}/update/">编辑</a></td>
+		        </tr>
+		        {% endfor %}
+		    </tbody>
+		</table>
+{% if is_paginated %}
+<div class="pagination">
+  {% if first %}
+    <a class="btn btn-secondary mr-1" role="button" href="?page=1">1</a>
+  {% endif %}
+  {% if left %}
+    {% if left_has_more %}
+        <span>...</span>
+    {% endif %}
+    {% for i in left %}
+        <a class="btn btn-secondary mr-1" role="button" href="?page={{ i }}">{{ i }}</a>
+    {% endfor %}
+  {% endif %}
+  <a class="btn btn-primary mr-1 active" role="button" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+  {% if right %}
+    {% for i in right %}
+        <a class="btn btn-secondary mr-1" role="button" href="?page={{ i }}">{{ i }}</a>
+    {% endfor %}
+    {% if right_has_more %}
+        <span>...</span>
+    {% endif %}
+  {% endif %}
+  {% if last %}
+    <a class="btn btn-secondary mr-1" role="button" href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+  {% endif %}
+</div>
+{% endif %}		
+	</div>
+</div>
+</main>
+<!-- /.container -->
+{% endblock %} 
+
+{% block js %}
+<script>
+	Holder.addTheme('thumb', {
+		bg : '#55595c',
+		fg : '#eceeef',
+		text : 'Thumbnail'
+	});
+</script>
+{% endblock %}
+</body>
+</html>

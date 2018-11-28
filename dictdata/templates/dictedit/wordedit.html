@@ -51,15 +51,9 @@
 			    <ul>
 			    {% for trwords in tran.words %}
 			        <li>
-			        {% for trword in trwords %}			            
-			            {% if not forloop.first %}
-			                {% if forloop.last %}
-			                    [{{ trword }}]
-			                {% else %}
-			                    {{ trword }}
-			                {% endif %}	    
-			            {% endif %}		            
-			        {% endfor %} 
+			            {{ trwords.2 }}			            
+	                    [{{ trwords.3 }}]
+	                    <a href="/dict/transdel/{{ trwords.0 }}/{{ tran.trtype }}/">删除</a> 
 			        </li>
 			    {% endfor %}
 			    </ul>

@@ -186,9 +186,9 @@ class JaWordUpdate(UpdateView):
         context = super(JaWordUpdate, self).get_context_data(**kwargs)
         tranluan = []
         # 日到中
-        jatocns = Ja2Cn.objects.values_list('fcnword__fwordno','fcnword__fword','fcnword__fpronunciation').filter(fjaword=self.object)
+        jatocns = Ja2Cn.objects.values_list('fid','fcnword__fwordno','fcnword__fword','fcnword__fpronunciation').filter(fjaword=self.object)
         # 日到英
-        jatoens = Ja2En.objects.values_list('fenword__fwordno','fenword__fword','fenword__fpronunciation').filter(fjaword=self.object)
+        jatoens = Ja2En.objects.values_list('fid','fenword__fwordno','fenword__fword','fenword__fpronunciation').filter(fjaword=self.object)
         tranluan.append({"title":"中文释义","trtype":"jatocn","words":jatocns})
         tranluan.append({"title":"英文释义","trtype":"jatoen","words":jatoens})
         context['trans'] = tranluan 
