@@ -12,11 +12,12 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 
-from dictdata.models import JaWord   #,Nword,MaxNo,CurveGroup,
+from dictdata.models import JaWord,CnWord,EnWord   #,Nword,MaxNo,CurveGroup,
 
 from commonfunc.wordsfunc import findwords
 
-from jpstudy.models import JpNewWord  
+from userstudy.models import JpNewWord,CnNewWord
+
 #from jpstudy.forms import JwordForm
 from jpstudy.sysfunc.commfunc import makecode
 
@@ -154,6 +155,21 @@ def findtonew(request,lang,newword):
         if lang=='ja':
             jword = JaWord(pk=newword)
             wordobjs = JpNewWord.objects.filter(fnewword=jword,fuser=curuser)     
+            # 如用户已存在此生词，陌生度加1      
+            if wordobjs:
+                for wordobj in wordobjs:
+                    levnum=wordobj.flevnum+1
+                    wordobj.flevnum=levnum
+            else:
+                wordobj = JpNewWord(
+                                fuser=curuser,
+                                fnewword=jword,
+                                flevnum=1,
+                                     )
+            wordobj.save()
+        if lang=='cn':
+            word = CnWord(pk=newword)
+            wordobjs = CnNewWord.objects.filter(fnewword=word,fuser=curuser)     
             # 如用户已存在此生词，陌生度加1      
             if wordobjs:
                 for wordobj in wordobjs:
