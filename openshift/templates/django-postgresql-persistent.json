@@ -5,17 +5,17 @@
     "name": "django-psql-persistent",
     "annotations": {
       "openshift.io/display-name": "Django + PostgreSQL",
-      "description": "An example Django application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.",
+      "description": "An example Django application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/sclorg/django-ex/blob/master/README.md.",
       "tags": "quickstart,python,django",
       "iconClass": "icon-python",
       "openshift.io/long-description": "This template defines resources needed to develop a Django based application, including a build configuration, application deployment configuration, and database deployment configuration.",
       "openshift.io/provider-display-name": "Red Hat, Inc.",
-      "openshift.io/documentation-url": "https://github.com/openshift/django-ex",
+      "openshift.io/documentation-url": "https://github.com/sclorg/django-ex",
       "openshift.io/support-url": "https://access.redhat.com",
       "template.openshift.io/bindable": "false"
     }
   },
-  "message": "The following service(s) have been created in your project: ${NAME}, ${DATABASE_SERVICE_NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.",
+  "message": "The following service(s) have been created in your project: ${NAME}, ${DATABASE_SERVICE_NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/sclorg/django-ex/blob/master/README.md.",
   "labels": {
       "template": "django-psql-persistent",
       "app": "django-psql-persistent"
@@ -105,7 +105,7 @@
             "from": {
               "kind": "ImageStreamTag",
               "namespace": "${NAMESPACE}",
-              "name": "python:3.5"
+              "name": "python:${PYTHON_VERSION}"
             },
             "env": [
               {
@@ -329,7 +329,7 @@
               "from": {
                 "kind": "ImageStreamTag",
                 "namespace": "${NAMESPACE}",
-                "name": "postgresql:9.5"
+                "name": "postgresql:${POSTGRESQL_VERSION}"
               }
             }
           },
@@ -438,6 +438,20 @@
       "value": "openshift"
     },
     {
+      "name": "PYTHON_VERSION",
+      "displayName": "Version of Python Image",
+      "description": "Version of Python image to be used (3.6 or latest).",
+      "value": "3.6",
+      "required": true
+    },
+    {
+      "name": "POSTGRESQL_VERSION",
+      "displayName": "Version of PostgreSQL Image",
+      "description": "Version of PostgreSQL image to be used (10 or latest).",
+      "value": "10",
+      "required": true
+    },
+    {
       "name": "MEMORY_LIMIT",
       "displayName": "Memory Limit",
       "required": true,
@@ -463,7 +477,7 @@
       "displayName": "Git Repository URL",
       "required": true,
       "description": "The URL of the repository with your application source code.",
-      "value": "https://github.com/openshift/django-ex.git"
+      "value": "https://github.com/sclorg/django-ex.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
