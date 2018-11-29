@@ -38,6 +38,7 @@
 		{% for word in wordli %}
 		<li class="list-group-item">{{ word.1 }}&emsp;[{{ word.2 }}]&emsp;&emsp;{{ word.4 }}&emsp;&emsp;
 		      <a class="btn btn-primary btn-sm" href="/ustudy/addnew/{{ lang }}/{{ word.0 }}/" role="button">加入生词本</a>
+		      <a href="/ustudy/addtag/{{ lang }}/{{ word.0 }}/">加标签</a>
 		</li>
 		{% endfor %}
 		</ul>

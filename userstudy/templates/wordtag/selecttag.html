@@ -1,0 +1,80 @@
+{% extends 'html5base.html' %} 
+{% load i18n %}
+
+{% block title %} Blog Template for Bootstrap {% endblock %}
+
+
+{% block contents %}
+<main role="main" class="container">
+<div class="row">
+	<div class="col col-md-9">
+		<div class="card mt-2">
+			<div class="card-header"></div>
+			<div class="card-body">
+				<form method="post">
+					{% csrf_token %}
+					<div class="form-group row">
+						<label for="fword" class="col-sm-3 col-form-label text-right">单词</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="fword" name="fword"
+								value="{{ form.fword.value }}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="fpronunciation"
+							class="col-sm-3 col-form-label text-right">读音</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="fpronunciation"
+								name="fpronunciation" value="{{ form.fpronunciation.value }}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="fwordclass" class="col-sm-3 col-form-label text-right">词性</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="fwordclass"
+								name="fwordclass" value="{{ form.fwordclass.value }}">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-5"></div>
+						<button type="submit" class="btn btn-primary mb-2" name="save">保存</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col col-md-3">
+	    {% for tran in trans %}
+		<div class="card mt-2">
+			<div class="card-header">{{ tran.title }}</div>
+			<div class="card-body">
+			    <ul>
+			    {% for trwords in tran.words %}
+			        <li>
+			            {{ trwords.2 }}			            
+	                    [{{ trwords.3 }}]
+	                    <a href="/dict/transdel/{{ trwords.0 }}/{{ tran.trtype }}/">删除</a> 
+			        </li>
+			    {% endfor %}
+			    </ul>
+			    <a href="/dict/transadd/{{ object.fwordno }}/{{ tran.trtype }}/" class="btn btn-sm btn-primary">添加</a>
+			</div>
+		</div>
+		{% endfor %}
+    </div>
+</div>    
+</main>
+<!-- /.container -->
+{% endblock %} 
+
+{% block js %}
+<script>
+	Holder.addTheme('thumb', {
+		bg : '#55595c',
+		fg : '#eceeef',
+		text : 'Thumbnail'
+	});
+</script>
+{% endblock %}
+</body>
+</html>
