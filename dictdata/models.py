@@ -140,17 +140,3 @@ class EnWordSen(models.Model):
     fsentence = models.ForeignKey(EnSentence,on_delete=models.CASCADE)
     fdate = models.DateTimeField(auto_now=True)
     
-# 日语单词分类表
-class JaGroup(models.Model):
-    fjword = models.ForeignKey(JaWord,on_delete=models.CASCADE)
-    fminclass = models.CharField(max_length=30)
-        
-# 英语单词分类表
-class EnGroup(models.Model):
-    feword = models.ForeignKey(EnWord,on_delete=models.CASCADE)
-    fminclass = models.CharField(max_length=30)
-        
-# 汉语单词分类表
-class CnGroup(models.Model):
-    fcword = models.ForeignKey(CnWord,on_delete=models.CASCADE)
-    fminclass = models.CharField(max_length=30)
