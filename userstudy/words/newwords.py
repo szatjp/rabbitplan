@@ -12,6 +12,7 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
 
 from dictdata.models import JaWord,CnWord,EnWord   #,Nword,MaxNo,CurveGroup,
 
@@ -150,6 +151,7 @@ def searchword(request):
     
 
 # 将查询的单词添加到生词表
+@login_required
 def findtonew(request,lang,newword):
     if request.method == "GET":
         curuser = request.user #User.objects.get(pk=request.user.pk)

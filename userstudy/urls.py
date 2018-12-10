@@ -15,7 +15,7 @@ from userstudy.words.newwords import NewWordLi
 urlpatterns = [
     path('findword/', searchword),
     re_path(r'^addnew/(\w+)/(\w+)/$', findtonew),
-    path('newwordli/', NewWordLi),
+    path('newwordli/', NewWordLi.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

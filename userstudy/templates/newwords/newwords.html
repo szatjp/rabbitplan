@@ -25,10 +25,10 @@
 		        </tr>
 		        {% for object in object_list %}
 		        <tr>
-		            <td>{{ object.fword }}</td>
-		            <td>{{ object.fpronunciation }}</td>
-		            <td>{{ object.fwordclass }}</td>
-		            <td>{{ object.ja2cn_set.all }}</td>
+		            <td>{{ object.fnewword__fword }}</td>
+		            <td>{{ object.fnewword__fpronunciation }}</td>
+		            <td>{{ object.fnewword__fwordclass }}</td>
+		            <td></td>
 		            <td><a class="btn btn-primary btn-sm" role="button" href="{{ object.fwordno }}/update/">编辑</a></td>
 		        </tr>
 		        {% endfor %}

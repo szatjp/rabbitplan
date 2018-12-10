@@ -133,7 +133,7 @@ DATABASES = {
 ''' 
 
 
-if hostname in ['tjp-pc']:
+if hostname in ['tjp-pc','tongzhengpc']:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
