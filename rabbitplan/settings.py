@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'jpstudy',
     'enstudy',
     'functest',
+    'rabbitmath',
 ]
 
 MIDDLEWARE = [

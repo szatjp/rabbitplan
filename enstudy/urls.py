@@ -13,7 +13,7 @@ from jpstudy.study import word
 
 urlpatterns = [
     #path(r'^findword/$', word.findword),
-    re_path(r'^addnew/(\w+)/$', word.findtonew), 
+    #re_path(r'^addnew/(\w+)/$', word.findtonew), 
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
