@@ -14,15 +14,16 @@ from django.db.models import Max
 
 from userstudy.models import WordClass
 
+# 标签列表
 class WordClassLi(ListView):
     #queryset = CnWord.objects.all()
     paginate_by = 10
-    template_name = 'dictedit/wordli.html'
+    template_name = 'wordtag/wclassli.html'
     def get_queryset(self):
         #self.publisher = get_object_or_404(CnWord, name=self.kwargs['fword'])
         #words = En2Cn.objects.filter(fcnword__fword__icontains=self.kwargs['fword'])
-        words = WordClass.objects.values('fwordno','fword','fpronunciation','fwordclass').all().order_by('fwordno')
-        return words
+        classs = WordClass.objects.values('fclassname','fcreatedate').all().order_by('fclassname')
+        return classs
     def get_context_data(self, **kwargs):
         """
                                       在视图函数中将模板变量传递给模板是通过给 render 函数的 context 参数传递一个字典实现的，
@@ -155,7 +156,7 @@ class WordClassLi(ListView):
 class WordClassCreate(CreateView):
     model = WordClass
     fields = ['fword','fpronunciation','fwordclass']
-    template_name = 'dictedit/worddet.html'
+    template_name = 'wordtag/wclassadd.html'
     def get_context_data(self, **kwargs):
         context = super(WordClassCreate, self).get_context_data(**kwargs)
         return context
